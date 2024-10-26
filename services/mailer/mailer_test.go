@@ -19,7 +19,10 @@ func TestSend(t *testing.T) {
 
 	apiKey := os.Getenv("SENDGRID_API_KEY")
 	from := "reizt.dev@gmail.com"
-	s := New(apiKey, from)
+	os.Setenv("SENDGRID_API_KEY", apiKey)
+	os.Setenv("MAILER_FROM", from)
+	s, err := New()
+	assert.NoError(t, err)
 
 	// Arrange
 	input := imailer.SendInput{

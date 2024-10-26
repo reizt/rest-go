@@ -5,6 +5,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -16,7 +17,13 @@ type service struct {
 	publicKey  *ecdsa.PublicKey
 }
 
-func New(privateKeyStr, publicKeyStr string) (isigner.Service, error) {
+func New() (isigner.Service, error) {
+	privateKeyStr := os.Getenv("JWT_PRIVATE_KEY")
+	publicKeyStr := os.Getenv("JWT_PUBLIC_KEY")
+	if privateKeyStr == "" || publicKeyStr == "" {
+		return nil, fmt.Errorf("JWT_PRIVATE_KEY and JWT_PUBLIC_KEY must be set")
+	}
+
 	privateKeyInfo, _ := pem.Decode([]byte(privateKeyStr))
 	publicKeyInfo, _ := pem.Decode([]byte(publicKeyStr))
 

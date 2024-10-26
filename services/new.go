@@ -2,9 +2,7 @@ package services
 
 import (
 	"fmt"
-	"os"
 
-	v "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/reizt/rest-go/iservices"
 	"github.com/reizt/rest-go/services/database"
 	"github.com/reizt/rest-go/services/greeter"
@@ -13,45 +11,24 @@ import (
 	"github.com/reizt/rest-go/services/signer"
 )
 
-type Env struct {
-	JwtPrivateKey  string
-	JwtPublicKey   string
-	SendgridApiKey string
-	MailerFrom     string
-}
-
-func (e Env) Validate() error {
-	return v.ValidateStruct(&e,
-		v.Field(&e.JwtPrivateKey, v.Required, v.Length(1, 10000)),
-		v.Field(&e.JwtPublicKey, v.Required, v.Length(1, 10000)),
-		v.Field(&e.SendgridApiKey, v.Required, v.Length(1, 10000)),
-		v.Field(&e.MailerFrom, v.Required, v.Length(1, 10000)),
-	)
-}
-
 func New() (*iservices.All, error) {
-	env := Env{
-		JwtPrivateKey:  os.Getenv("JWT_PRIVATE_KEY"),
-		JwtPublicKey:   os.Getenv("JWT_PUBLIC_KEY"),
-		SendgridApiKey: os.Getenv("SENDGRID_API_KEY"),
-		MailerFrom:     os.Getenv("MAILER_FROM"),
-	}
-	if err := env.Validate(); err != nil {
-		fmt.Println(err)
-		return nil, fmt.Errorf("failed to init services")
-	}
-
-	signer, err := signer.New(env.JwtPrivateKey, env.JwtPublicKey)
+	mailer, err := mailer.New()
 	if err != nil {
 		fmt.Println(err)
-		return nil, fmt.Errorf("failed to init services")
+		return nil, fmt.Errorf("failed to init mailer")
+	}
+
+	signer, err := signer.New()
+	if err != nil {
+		fmt.Println(err)
+		return nil, fmt.Errorf("failed to init signer")
 	}
 
 	return &iservices.All{
 		Greeter:  greeter.New(),
 		Database: database.New(),
 		Hasher:   hasher.New(),
-		Mailer:   mailer.New(env.SendgridApiKey, env.MailerFrom),
+		Mailer:   mailer,
 		Signer:   signer,
 	}, nil
 }

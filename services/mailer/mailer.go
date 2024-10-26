@@ -2,6 +2,7 @@ package mailer
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
@@ -14,11 +15,17 @@ type service struct {
 	from   string
 }
 
-func New(apiKey string, from string) imailer.Service {
+func New() (imailer.Service, error) {
+	apiKey := os.Getenv("SENDGRID_API_KEY")
+	from := os.Getenv("MAILER_FROM")
+	if apiKey == "" || from == "" {
+		return nil, fmt.Errorf("SENDGRID_API_KEY and MAILER_FROM must be set")
+	}
+
 	return &service{
 		apiKey: apiKey,
 		from:   from,
-	}
+	}, nil
 }
 
 func (s *service) Send(input imailer.SendInput) error {

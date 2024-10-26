@@ -1,6 +1,7 @@
 package signer
 
 import (
+	"os"
 	"testing"
 	"time"
 
@@ -17,7 +18,10 @@ gprEy+PrKc/trp4ig5olG407OdLvaonbXLGjFHsSvPYO7M6HGgoqCFn6
 MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEQfcp0ZN0IS9ykAMMbrLwSNePl15s
 BIKaxMvj6ynP7a6eIoOaJRuNOznS72qJ21yxoxR7Erz2DuzOhxoKKghZ+g==
 -----END PUBLIC KEY-----`
-	s, err := New(privateKey, publicKey)
+	os.Setenv("JWT_PRIVATE_KEY", privateKey)
+	os.Setenv("JWT_PUBLIC_KEY", publicKey)
+
+	s, err := New()
 	assert.NoError(t, err)
 
 	// Sign
