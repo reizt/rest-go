@@ -1,5 +1,6 @@
 package handlers
 
 const (
-	TokenCookieName = "token"
+	OTPTokenCookieName   = "otp_token"
+	LoginTokenCookieName = "login_token"
 )

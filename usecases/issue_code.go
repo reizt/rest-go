@@ -17,7 +17,8 @@ func IssueCode(s *iservices.All) i.IssueCode {
 		codeValue := id.GenerateCode()
 		codeValueHash, err := s.Hasher.Hash(codeValue)
 		if err != nil {
-			return nil, err
+			fmt.Println(err)
+			return nil, fmt.Errorf("failed to create code")
 		}
 
 		// Save code to database
@@ -32,7 +33,8 @@ func IssueCode(s *iservices.All) i.IssueCode {
 			CreatedAt: now,
 		}
 		if err := s.Database.Code.Create(code); err != nil {
-			return nil, err
+			fmt.Println(err)
+			return nil, fmt.Errorf("failed to create code")
 		}
 
 		// Send email

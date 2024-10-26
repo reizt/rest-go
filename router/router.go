@@ -10,8 +10,9 @@ func New(u *iusecases.All) *echo.Echo {
 	e := echo.New()
 
 	e.GET("/hello", handlers.SayHello(u.SayHello))
-	e.POST("/code/issue", handlers.IssueCode(u.IssueCode))
-	e.POST("/code/verify", handlers.VerifyCode(u.VerifyCode))
+	e.POST("/auth/code/issue", handlers.IssueCode(u.IssueCode))
+	e.POST("/auth/code/verify", handlers.VerifyCode(u.VerifyCode))
+	e.POST("/auth/create-user", handlers.CreateUser(u.CreateUser))
 
 	return e
 }

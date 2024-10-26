@@ -4,4 +4,5 @@ type All struct {
 	SayHello
 	IssueCode
 	VerifyCode
+	CreateUser
 }

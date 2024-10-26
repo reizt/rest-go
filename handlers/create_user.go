@@ -7,19 +7,23 @@ import (
 	"github.com/reizt/rest-go/iusecases"
 )
 
-type VerifyCodeReqBody struct {
-	CodeId string `json:"codeId"`
+type CreateUserReqBody struct {
+	Token    string `json:"token"`
+	Name     string `json:"name"`
+	Password string `json:"password"`
 }
 
-func VerifyCode(u iusecases.VerifyCode) echo.HandlerFunc {
+func CreateUser(u iusecases.CreateUser) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		var json VerifyCodeReqBody
+		var json CreateUserReqBody
 		if err := c.Bind(&json); err != nil {
 			return c.String(http.StatusBadRequest, "Invalid input")
 		}
 
-		input := iusecases.VerifyCodeInput{
-			CodeId: json.CodeId,
+		input := iusecases.CreateUserInput{
+			OTPToken: json.Token,
+			Name:     json.Name,
+			Password: json.Password,
 		}
 		err := input.Validate()
 		if err != nil {
@@ -32,13 +36,13 @@ func VerifyCode(u iusecases.VerifyCode) echo.HandlerFunc {
 		}
 
 		cookie := http.Cookie{
-			Name:     OTPTokenCookieName,
-			Value:    output.Token,
+			Name:     LoginTokenCookieName,
+			Value:    output.LoginToken,
 			HttpOnly: true,
 			Secure:   true,
 			SameSite: http.SameSiteStrictMode,
 		}
 		c.SetCookie(&cookie)
-		return c.String(http.StatusOK, "OK")
+		return c.NoContent(http.StatusCreated)
 	}
 }

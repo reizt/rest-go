@@ -16,6 +16,7 @@ func VerifyCode(s *iservices.All) i.VerifyCode {
 		// Get code from database
 		code, err := s.Database.Code.GetById(input.CodeId)
 		if err != nil {
+			fmt.Println(err)
 			return nil, fmt.Errorf("not found")
 		}
 
@@ -35,11 +36,13 @@ func VerifyCode(s *iservices.All) i.VerifyCode {
 		}
 		tokenPayloadJson, err := json.Marshal(tokenPayload)
 		if err != nil {
-			return nil, err
+			fmt.Println(err)
+			return nil, fmt.Errorf("failed to issue token")
 		}
 		token, err := s.Signer.Sign(string(tokenPayloadJson), time.Hour)
 		if err != nil {
-			return nil, err
+			fmt.Println(err)
+			return nil, fmt.Errorf("failed to issue token")
 		}
 
 		// Return
