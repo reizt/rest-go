@@ -5,4 +5,5 @@ type All struct {
 	IssueCode
 	VerifyCode
 	CreateUser
+	GetUser
 }

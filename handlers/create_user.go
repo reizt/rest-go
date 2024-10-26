@@ -32,7 +32,7 @@ func CreateUser(u iusecases.CreateUser) echo.HandlerFunc {
 
 		output, err := u(input)
 		if err != nil {
-			return c.String(http.StatusInternalServerError, "Something went wrong")
+			return c.String(http.StatusInternalServerError, err.Error())
 		}
 
 		cookie := http.Cookie{

@@ -1,10 +1,20 @@
 package idatabase
 
+import "github.com/reizt/rest-go/entities"
+
 type User struct {
 	Id           string
 	Name         string
 	Email        string
 	PasswordHash string
+}
+
+func (u User) ToEntity() entities.User {
+	return entities.User{
+		Id:    u.Id,
+		Email: u.Email,
+		Name:  u.Name,
+	}
 }
 
 type UserUpdate struct {
