@@ -12,6 +12,12 @@ import (
 )
 
 func New() (*iservices.All, error) {
+	database, err := database.New()
+	if err != nil {
+		fmt.Println(err)
+		return nil, fmt.Errorf("failed to init database")
+	}
+
 	mailer, err := mailer.New()
 	if err != nil {
 		fmt.Println(err)
@@ -26,7 +32,7 @@ func New() (*iservices.All, error) {
 
 	return &iservices.All{
 		Greeter:  greeter.New(),
-		Database: database.New(),
+		Database: *database,
 		Hasher:   hasher.New(),
 		Mailer:   mailer,
 		Signer:   signer,

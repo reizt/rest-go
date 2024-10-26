@@ -60,3 +60,8 @@ func (r UserRepo) Delete(id string, ctx context.Context) error {
 	err := r.client.User.DeleteOneID(id).Exec(ctx)
 	return err
 }
+
+func (r UserRepo) deleteAll(ctx context.Context) error {
+	_, err := r.client.User.Delete().Exec(ctx)
+	return err
+}

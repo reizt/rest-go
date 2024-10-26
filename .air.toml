@@ -4,3 +4,4 @@ watch_dir = "./"
 bin = ".air/main"
 cmd = "go build -o ./.air/main ."
 exclude_dir = ["e2e"]
+exclude_ext = ["test.go"]

@@ -55,3 +55,8 @@ func (r CodeRepo) Delete(id string, ctx context.Context) error {
 	err := r.client.Code.DeleteOneID(id).Exec(ctx)
 	return err
 }
+
+func (r CodeRepo) deleteAll(ctx context.Context) error {
+	_, err := r.client.Code.Delete().Exec(ctx)
+	return err
+}
