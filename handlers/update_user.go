@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -12,25 +13,31 @@ type UpdateUserReqBodyData struct {
 }
 
 type UpdateUserReqBody struct {
-	Token string                `json:"token"`
-	Data  UpdateUserReqBodyData `json:"data"`
+	Data UpdateUserReqBodyData `json:"data"`
 }
 
 func UpdateUser(u iusecases.UpdateUser) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		var json UpdateUserReqBody
-		if err := c.Bind(&json); err != nil {
+		var reqBody UpdateUserReqBody
+		if err := c.Bind(&reqBody); err != nil {
+			fmt.Println("json parse error:", err)
+			return c.String(http.StatusBadRequest, "Invalid input")
+		}
+
+		loginToken, err := c.Cookie(LoginTokenCookieName)
+		if err != nil {
+			fmt.Println("cookie error:", err)
 			return c.String(http.StatusBadRequest, "Invalid input")
 		}
 
 		input := iusecases.UpdateUserInput{
-			LoginToken: json.Token,
+			LoginToken: loginToken.Value,
 			Data: iusecases.UpdateUserInputData{
-				Name: json.Data.Name,
+				Name: reqBody.Data.Name,
 			},
 		}
-		err := input.Validate()
-		if err != nil {
+		if err := input.Validate(); err != nil {
+			fmt.Println("input validation error:", err)
 			switch err {
 			case iusecases.ErrInvalidToken:
 				return c.String(http.StatusUnauthorized, err.Error())
@@ -40,6 +47,7 @@ func UpdateUser(u iusecases.UpdateUser) echo.HandlerFunc {
 		}
 
 		if _, err := u(input, c.Request().Context()); err != nil {
+			fmt.Println("usecase error:", err)
 			return c.String(http.StatusInternalServerError, err.Error())
 		}
 

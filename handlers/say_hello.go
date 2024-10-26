@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -14,13 +15,14 @@ func SayHello(u iusecases.SayHello) echo.HandlerFunc {
 		input := iusecases.SayHelloInput{
 			Name: name,
 		}
-		err := input.Validate()
-		if err != nil {
+		if err := input.Validate(); err != nil {
+			fmt.Println("input validation error:", err)
 			return c.String(http.StatusBadRequest, "Invalid input")
 		}
 
 		output, err := u(input, c.Request().Context())
 		if err != nil {
+			fmt.Println("usecase error:", err)
 			return c.String(http.StatusInternalServerError, err.Error())
 		}
 

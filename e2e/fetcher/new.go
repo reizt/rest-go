@@ -23,6 +23,7 @@ type Request struct {
 	Method  string
 	Path    string
 	Body    interface{}
+	Cookies map[string]string
 	Headers map[string]string
 }
 
@@ -65,11 +66,19 @@ func (f *Fetcher) Fetch(req Request) (*Response, error) {
 	if httpReq.Body != nil {
 		httpReq.Header.Set("Content-Type", "application/json")
 	}
+	for k, v := range req.Cookies {
+		httpReq.AddCookie(&http.Cookie{
+			Name:  k,
+			Value: v,
+		})
+	}
+	for k, v := range req.Headers {
+		httpReq.Header.Set(k, v)
+	}
 	resp, err := f.client.Do(httpReq)
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
 	return &Response{
 		StatusCode: resp.StatusCode,
 		Body:       resp.Body,

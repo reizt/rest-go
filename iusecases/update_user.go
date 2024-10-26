@@ -18,8 +18,12 @@ type UpdateUserInput struct {
 func (i UpdateUserInput) Validate() error {
 	return v.ValidateStruct(&i,
 		v.Field(&i.LoginToken, v.Required, v.Length(1, 10000)),
-		v.Field(&i.Data, v.Required),
-		v.Field(&i.Data.Name, v.Length(1, 100)),
+		v.Field(&i.Data, v.By(func(datai interface{}) error {
+			data := datai.(UpdateUserInputData)
+			return v.ValidateStruct(&data,
+				v.Field(&data.Name, v.Required, v.Length(1, 100)),
+			)
+		})),
 	)
 }
 

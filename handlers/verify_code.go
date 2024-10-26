@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -9,25 +10,29 @@ import (
 
 type VerifyCodeReqBody struct {
 	CodeId string `json:"codeId"`
+	Code   string `json:"code"`
 }
 
 func VerifyCode(u iusecases.VerifyCode) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		var json VerifyCodeReqBody
 		if err := c.Bind(&json); err != nil {
+			fmt.Println("json parse error:", err)
 			return c.String(http.StatusBadRequest, "Invalid input")
 		}
 
 		input := iusecases.VerifyCodeInput{
 			CodeId: json.CodeId,
+			Code:   json.Code,
 		}
-		err := input.Validate()
-		if err != nil {
+		if err := input.Validate(); err != nil {
+			fmt.Println("input validation error:", err)
 			return c.String(http.StatusBadRequest, "Invalid input")
 		}
 
 		output, err := u(input, c.Request().Context())
 		if err != nil {
+			fmt.Println("usecase error:", err)
 			switch err {
 			case iusecases.ErrInvalidToken:
 			case iusecases.ErrInvalidCode:

@@ -14,7 +14,7 @@ type VerifyCodeInput struct {
 func (i VerifyCodeInput) Validate() error {
 	return v.ValidateStruct(&i,
 		v.Field(&i.CodeId, v.Required),
-		v.Field(&i.Code, v.Required),
+		v.Field(&i.Code, v.Required, v.Length(6, 6)),
 	)
 }
 

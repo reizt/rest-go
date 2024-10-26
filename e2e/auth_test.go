@@ -2,9 +2,11 @@ package e2e
 
 import (
 	"encoding/json"
-	"net/http"
+	"fmt"
+	"os"
 	"testing"
 
+	"github.com/joho/godotenv"
 	"github.com/reizt/rest-go/e2e/fetcher"
 	"github.com/reizt/rest-go/handlers"
 	"github.com/stretchr/testify/assert"
@@ -14,9 +16,23 @@ import (
 const (
 	userName     = "John"
 	userNameNew  = "Jane"
-	userEmail    = "john@example.com"
+	userEmail    = "reizt.dev@gmail.com"
 	userPassword = "password"
 )
+
+func clearDatabase(t *testing.T) {
+	req := fetcher.Request{
+		Method: "POST",
+		Path:   "/dev/clear-database",
+		Body:   nil,
+		Headers: map[string]string{
+			"Content-Type": "application/json",
+		},
+	}
+	f := fetcher.New("http://localhost:1323")
+	_, err := f.Fetch(req)
+	require.NoError(t, err)
+}
 
 func testIssueCode(t *testing.T, f *fetcher.Fetcher) string {
 	// Arrange
@@ -35,22 +51,29 @@ func testIssueCode(t *testing.T, f *fetcher.Fetcher) string {
 
 	// Assert
 	require.NoError(t, err)
+	defer resp.Body.Close()
 	assert.LessOrEqual(t, resp.StatusCode, 209)
-	issueCodeResBody := handlers.IssueCodeResBody{}
-	err = json.NewDecoder(resp.Body).Decode(&issueCodeResBody)
+	respBody := handlers.IssueCodeResBody{}
+	err = json.NewDecoder(resp.Body).Decode(&respBody)
 	require.NoError(t, err)
-	assert.NotEmpty(t, issueCodeResBody.CodeId, "issue code response should contain code id")
+	assert.NotEmpty(t, respBody.CodeId, "issue code response should contain code id")
 
-	return issueCodeResBody.CodeId
+	return respBody.CodeId
 }
 
 func testVerifyCode(t *testing.T, f *fetcher.Fetcher, codeId string) string {
 	// Arrange
+	codeValue := os.Getenv("TEST_GENERATE_CODE_FIXED_VALUE")
+	if codeValue == "" {
+		fmt.Println("TEST_GENERATE_CODE_FIXED_VALUE is not set")
+		t.Fail()
+	}
 	req := fetcher.Request{
 		Method: "POST",
 		Path:   "/auth/code/verify",
 		Body: handlers.VerifyCodeReqBody{
 			CodeId: codeId,
+			Code:   codeValue,
 		},
 		Headers: map[string]string{},
 	}
@@ -60,10 +83,11 @@ func testVerifyCode(t *testing.T, f *fetcher.Fetcher, codeId string) string {
 
 	// Assert
 	require.NoError(t, err)
+	defer resp.Body.Close()
 	assert.LessOrEqual(t, resp.StatusCode, 209)
-	assert.NotEmpty(t, resp.Headers[handlers.OTPTokenCookieName], "verify code response should contain token cookie")
-
-	return resp.Headers[handlers.OTPTokenCookieName]
+	otpToken := resp.Cookies[handlers.OTPTokenCookieName]
+	assert.NotEmpty(t, otpToken, "verify code response should contain token cookie")
+	return otpToken
 }
 
 func testCreateUser(t *testing.T, f *fetcher.Fetcher, otpToken string) string {
@@ -72,11 +96,12 @@ func testCreateUser(t *testing.T, f *fetcher.Fetcher, otpToken string) string {
 		Method: "POST",
 		Path:   "/auth/create-user",
 		Body: handlers.CreateUserReqBody{
-			Token:    otpToken,
 			Name:     userName,
 			Password: userPassword,
 		},
-		Headers: map[string]string{},
+		Cookies: map[string]string{
+			handlers.OTPTokenCookieName: otpToken,
+		},
 	}
 
 	// Act
@@ -84,10 +109,12 @@ func testCreateUser(t *testing.T, f *fetcher.Fetcher, otpToken string) string {
 
 	// Assert
 	require.NoError(t, err)
+	defer resp.Body.Close()
 	assert.LessOrEqual(t, resp.StatusCode, 209)
-	assert.NotEmpty(t, resp.Cookies[handlers.LoginTokenCookieName], "create user response should contain login token cookie")
+	loginToken := resp.Cookies[handlers.LoginTokenCookieName]
+	assert.NotEmpty(t, loginToken, "create user response should contain login token cookie")
 
-	return resp.Cookies[handlers.LoginTokenCookieName]
+	return loginToken
 }
 
 func testGetUser(t *testing.T, f *fetcher.Fetcher, loginToken string) {
@@ -95,14 +122,8 @@ func testGetUser(t *testing.T, f *fetcher.Fetcher, loginToken string) {
 	req := fetcher.Request{
 		Method: "GET",
 		Path:   "/user",
-		Headers: map[string]string{
-			"Cookie": (&http.Cookie{
-				Name:     handlers.LoginTokenCookieName,
-				Value:    loginToken,
-				HttpOnly: true,
-				Secure:   true,
-				SameSite: http.SameSiteStrictMode,
-			}).String(),
+		Cookies: map[string]string{
+			handlers.LoginTokenCookieName: loginToken,
 		},
 	}
 
@@ -111,11 +132,12 @@ func testGetUser(t *testing.T, f *fetcher.Fetcher, loginToken string) {
 
 	// Assert
 	require.NoError(t, err)
+	defer resp.Body.Close()
 	assert.LessOrEqual(t, resp.StatusCode, 209)
-	getUserResBody := handlers.GetUserResBody{}
-	err = json.NewDecoder(resp.Body).Decode(&getUserResBody)
+	respBody := handlers.GetUserResBody{}
+	err = json.NewDecoder(resp.Body).Decode(&respBody)
 	require.NoError(t, err)
-	assert.Equal(t, userName, getUserResBody.User.Name, "get user response should contain user name")
+	assert.Equal(t, userName, respBody.User.Name, "get user response should contain user name")
 }
 
 func testUpdateUser(t *testing.T, f *fetcher.Fetcher, loginToken string) {
@@ -124,12 +146,13 @@ func testUpdateUser(t *testing.T, f *fetcher.Fetcher, loginToken string) {
 		Method: "PATCH",
 		Path:   "/user",
 		Body: handlers.UpdateUserReqBody{
-			Token: loginToken,
 			Data: handlers.UpdateUserReqBodyData{
 				Name: userNameNew,
 			},
 		},
-		Headers: map[string]string{},
+		Cookies: map[string]string{
+			handlers.LoginTokenCookieName: loginToken,
+		},
 	}
 
 	// Act
@@ -137,24 +160,42 @@ func testUpdateUser(t *testing.T, f *fetcher.Fetcher, loginToken string) {
 
 	// Assert
 	require.NoError(t, err)
+	defer resp.Body.Close()
 	assert.LessOrEqual(t, resp.StatusCode, 209)
 }
 
 func TestAuth(t *testing.T) {
+	godotenv.Load("../.env")
 	f := fetcher.New("http://localhost:1323")
+
+	// Clear database
+	clearDatabase(t)
+	fmt.Println("✅ Cleared database")
 
 	// Issue code
 	codeId := testIssueCode(t, f)
+	fmt.Println("✅ Issued code")
+	fmt.Println("codeId:", codeId)
 
 	// Verify code
 	otpToken := testVerifyCode(t, f, codeId)
+	fmt.Println("✅ Verified code")
+	fmt.Println("otpToken:", otpToken)
 
 	// Create user
 	loginToken := testCreateUser(t, f, otpToken)
+	fmt.Println("✅ Created user")
+	fmt.Println("loginToken:", loginToken)
 
 	// Get user
 	testGetUser(t, f, loginToken)
+	fmt.Println("✅ Got user")
 
 	// Update user
 	testUpdateUser(t, f, loginToken)
+	fmt.Println("✅ Updated user")
+
+	// Clear database
+	clearDatabase(t)
+	fmt.Println("✅ Cleared database")
 }

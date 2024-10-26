@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -20,6 +21,7 @@ func IssueCode(u iusecases.IssueCode) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		var json IssueCodeReqBody
 		if err := c.Bind(&json); err != nil {
+			fmt.Println("json parse error:", err)
 			return c.String(http.StatusBadRequest, "Invalid input")
 		}
 
@@ -27,13 +29,14 @@ func IssueCode(u iusecases.IssueCode) echo.HandlerFunc {
 			Email:  json.Email,
 			Action: json.Action,
 		}
-		err := input.Validate()
-		if err != nil {
+		if err := input.Validate(); err != nil {
+			fmt.Println("input validation error:", err)
 			return c.String(http.StatusInternalServerError, err.Error())
 		}
 
 		output, err := u(input, c.Request().Context())
 		if err != nil {
+			fmt.Println("usecase error:", err)
 			return c.String(http.StatusInternalServerError, err.Error())
 		}
 
