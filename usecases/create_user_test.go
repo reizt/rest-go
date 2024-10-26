@@ -14,6 +14,7 @@ import (
 	"github.com/reizt/rest-go/mservices"
 	"github.com/reizt/rest-go/usecases/token"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestCreateUser(t *testing.T) {
@@ -59,7 +60,7 @@ func TestCreateUser(t *testing.T) {
 	sSignerSignOK := func(payloadJson string, expiresIn time.Duration) (string, error) {
 		var payload token.OTPTokenPayload
 		err := json.Unmarshal([]byte(payloadJson), &payload)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(t, expiresIn, LoginTokenExpiration)
 		return sample.LoginToken, nil
 	}
@@ -158,7 +159,7 @@ func TestCreateUser(t *testing.T) {
 			if tc.expectedErr != nil {
 				assert.Error(t, err, tc.expectedErr)
 			} else {
-				assert.NoError(t, err)
+				require.NoError(t, err)
 				tc.assertOutput(t, output)
 			}
 		})

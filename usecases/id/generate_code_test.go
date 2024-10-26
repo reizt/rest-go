@@ -5,11 +5,12 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGenerateCode(t *testing.T) {
 	code, err := GenerateCode()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	fmt.Println(code)
 	assert.NotEmpty(t, code)
 }

@@ -7,6 +7,7 @@ import (
 
 	"github.com/reizt/rest-go/iservices/idatabase"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var (
@@ -30,7 +31,7 @@ func TestUserGetById(t *testing.T) {
 	actual, err := repo.GetById(sampleUser.Id, ctx)
 
 	// Assert
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.NotEmpty(t, actual)
 	assert.True(t, reflect.DeepEqual(sampleUser, *actual))
 }
@@ -47,7 +48,7 @@ func TestUserGetByEmail(t *testing.T) {
 	actual, err := repo.GetByEmail(sampleUser.Email, ctx)
 
 	// Assert
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.NotEmpty(t, actual)
 	assert.True(t, reflect.DeepEqual(sampleUser, *actual))
 }
@@ -63,7 +64,7 @@ func TestUserCreate(t *testing.T) {
 	err := repo.Create(sampleUser, ctx)
 
 	// Assert
-	assert.NoError(t, err)
+	require.NoError(t, err)
 }
 
 func TestUserUpdate(t *testing.T) {
@@ -84,9 +85,9 @@ func TestUserUpdate(t *testing.T) {
 	err := repo.Update(newUser, ctx)
 
 	// Assert
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	found, err := repo.GetById(sampleUser.Id, ctx)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.True(t, reflect.DeepEqual(newUser, *found))
 }
 
@@ -102,7 +103,7 @@ func TestUserDelete(t *testing.T) {
 	err := repo.Delete(sampleUser.Id, ctx)
 
 	// Assert
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	_, err = repo.GetById(sampleUser.Id, ctx)
 	assert.Error(t, err)
 }

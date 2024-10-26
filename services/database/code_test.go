@@ -7,6 +7,7 @@ import (
 
 	"github.com/reizt/rest-go/iservices/idatabase"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var (
@@ -32,7 +33,7 @@ func TestCodeGetById(t *testing.T) {
 	actual, err := repo.GetById(sampleCode.Id, ctx)
 
 	// Assert
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.NotEmpty(t, actual)
 	assert.True(t, reflect.DeepEqual(sampleCode, *actual))
 }
@@ -49,7 +50,7 @@ func TestCodeGetByEmail(t *testing.T) {
 	actual, err := repo.GetByEmail(sampleCode.Email, ctx)
 
 	// Assert
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.NotEmpty(t, actual)
 	assert.True(t, reflect.DeepEqual(sampleCode, *actual))
 }
@@ -65,7 +66,7 @@ func TestCodeCreate(t *testing.T) {
 	err := repo.Create(sampleCode, ctx)
 
 	// Assert
-	assert.NoError(t, err)
+	require.NoError(t, err)
 }
 
 func TestCodeDelete(t *testing.T) {
@@ -80,7 +81,7 @@ func TestCodeDelete(t *testing.T) {
 	err := repo.Delete(sampleCode.Id, ctx)
 
 	// Assert
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	_, err = repo.GetById(sampleCode.Id, ctx)
 	assert.Error(t, err)
 }

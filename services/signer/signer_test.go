@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestSign(t *testing.T) {
@@ -22,18 +23,18 @@ BIKaxMvj6ynP7a6eIoOaJRuNOznS72qJ21yxoxR7Erz2DuzOhxoKKghZ+g==
 	os.Setenv("JWT_PUBLIC_KEY", publicKey)
 
 	s, err := New()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	// Sign
 	json := `{"name":"John"}`
 	expiresIn := time.Hour
 	token, err := s.Sign(json, expiresIn)
 
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.NotEmpty(t, token)
 
 	// Verify
 	payload, err := s.Verify(token)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, json, payload)
 }

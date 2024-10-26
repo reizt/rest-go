@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/joho/godotenv"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestSend(t *testing.T) {
@@ -21,7 +21,7 @@ func TestSend(t *testing.T) {
 	os.Setenv("SENDGRID_API_KEY", apiKey)
 	os.Setenv("MAILER_FROM", from)
 	s, err := New()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	// Arrange
 	input := sendInput{
@@ -35,5 +35,5 @@ func TestSend(t *testing.T) {
 	err = s.send(input)
 
 	// Assert
-	assert.NoError(t, err)
+	require.NoError(t, err)
 }
