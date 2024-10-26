@@ -24,7 +24,6 @@ BIKaxMvj6ynP7a6eIoOaJRuNOznS72qJ21yxoxR7Erz2DuzOhxoKKghZ+g==
 	json := `{"name":"John"}`
 	expiresIn := time.Hour
 	token, err := s.Sign(json, expiresIn)
-	println(token)
 
 	assert.NoError(t, err)
 	assert.NotEmpty(t, token)

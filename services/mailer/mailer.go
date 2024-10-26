@@ -31,6 +31,6 @@ func (s *service) Send(input imailer.SendInput) error {
 		fmt.Println(err)
 		return err
 	}
-	fmt.Println(response)
+	fmt.Println("SendGrid status:", response.StatusCode)
 	return nil
 }

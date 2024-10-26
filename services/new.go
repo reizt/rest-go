@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"os"
 
 	v "github.com/go-ozzo/ozzo-validation/v4"
@@ -36,12 +37,14 @@ func New() (*iservices.All, error) {
 		MailerFrom:     os.Getenv("MAILER_FROM"),
 	}
 	if err := env.Validate(); err != nil {
-		return nil, err
+		fmt.Println(err)
+		return nil, fmt.Errorf("failed to init services")
 	}
 
 	signer, err := signer.New(env.JwtPrivateKey, env.JwtPublicKey)
 	if err != nil {
-		return nil, err
+		fmt.Println(err)
+		return nil, fmt.Errorf("failed to init services")
 	}
 
 	return &iservices.All{

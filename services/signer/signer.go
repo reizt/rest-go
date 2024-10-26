@@ -22,12 +22,12 @@ func New(privateKeyStr, publicKeyStr string) (isigner.Service, error) {
 
 	privateKey, err := x509.ParsePKCS8PrivateKey(privateKeyInfo.Bytes)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	publicKey, err := x509.ParsePKIXPublicKey(publicKeyInfo.Bytes)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	return &service{
