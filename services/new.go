@@ -39,11 +39,16 @@ func New() (*iservices.All, error) {
 		return nil, err
 	}
 
+	signer, err := signer.New(env.JwtPrivateKey, env.JwtPublicKey)
+	if err != nil {
+		return nil, err
+	}
+
 	return &iservices.All{
 		Greeter:  greeter.New(),
 		Database: database.New(),
 		Hasher:   hasher.New(),
 		Mailer:   mailer.New(env.SendgridApiKey, env.MailerFrom),
-		Signer:   signer.New(env.JwtPrivateKey, env.JwtPublicKey),
+		Signer:   signer,
 	}, nil
 }

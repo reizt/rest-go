@@ -1,6 +1,9 @@
 package signer
 
 import (
+	"crypto/ecdsa"
+	"crypto/x509"
+	"encoding/pem"
 	"fmt"
 	"time"
 
@@ -9,15 +12,28 @@ import (
 )
 
 type service struct {
-	privateKey []byte
-	publicKey  []byte
+	privateKey *ecdsa.PrivateKey
+	publicKey  *ecdsa.PublicKey
 }
 
-func New(privateKey, publicKey string) isigner.Service {
-	return &service{
-		privateKey: []byte(privateKey),
-		publicKey:  []byte(publicKey),
+func New(privateKeyStr, publicKeyStr string) (isigner.Service, error) {
+	privateKeyInfo, _ := pem.Decode([]byte(privateKeyStr))
+	publicKeyInfo, _ := pem.Decode([]byte(publicKeyStr))
+
+	privateKey, err := x509.ParsePKCS8PrivateKey(privateKeyInfo.Bytes)
+	if err != nil {
+		panic(err)
 	}
+
+	publicKey, err := x509.ParsePKIXPublicKey(publicKeyInfo.Bytes)
+	if err != nil {
+		panic(err)
+	}
+
+	return &service{
+		privateKey: privateKey.(*ecdsa.PrivateKey),
+		publicKey:  publicKey.(*ecdsa.PublicKey),
+	}, nil
 }
 
 func (s *service) Sign(json string, expiresIn time.Duration) (string, error) {
@@ -28,7 +44,7 @@ func (s *service) Sign(json string, expiresIn time.Duration) (string, error) {
 	}
 
 	// Sign token
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
 	tokenString, err := token.SignedString(s.privateKey)
 	if err != nil {
 		return "", err
@@ -40,7 +56,7 @@ func (s *service) Sign(json string, expiresIn time.Duration) (string, error) {
 func (s *service) Verify(tokenString string) (string, error) {
 	// Verify token
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+		if _, ok := token.Method.(*jwt.SigningMethodECDSA); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
 		return s.publicKey, nil
