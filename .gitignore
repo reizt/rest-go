@@ -1,2 +1,7 @@
 .env
-.air
+.DS_Store
+.air/
+tmp/
+ent/*
+!ent/schema
+!ent/generate.go

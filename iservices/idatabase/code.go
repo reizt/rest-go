@@ -12,8 +12,8 @@ type Code struct {
 }
 
 type CodeRepo interface {
-	GetById(id string, ctx context.Context) (Code, error)
-	GetByEmail(email string, ctx context.Context) (Code, error)
+	GetById(id string, ctx context.Context) (*Code, error)
+	GetByEmail(email string, ctx context.Context) (*Code, error)
 	Create(data Code, ctx context.Context) error
 	Delete(id string, ctx context.Context) error
 }
