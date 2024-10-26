@@ -28,7 +28,7 @@ func GetUser(s *iservices.All) i.GetUser {
 		user, err := s.Database.User.GetById(loginTokenPayload.UserId, ctx)
 		if err != nil {
 			fmt.Println(err)
-			return nil, i.ErrUserNotFound
+			return nil, i.ErrInvalidToken // to avoid leaking information
 		}
 
 		// Return

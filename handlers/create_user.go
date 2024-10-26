@@ -32,7 +32,12 @@ func CreateUser(u iusecases.CreateUser) echo.HandlerFunc {
 
 		output, err := u(input, c.Request().Context())
 		if err != nil {
-			return c.String(http.StatusInternalServerError, err.Error())
+			switch err {
+			case iusecases.ErrInvalidToken:
+				return c.String(http.StatusUnauthorized, err.Error())
+			default:
+				return c.String(http.StatusInternalServerError, err.Error())
+			}
 		}
 
 		cookie := http.Cookie{

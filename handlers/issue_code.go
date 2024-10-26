@@ -29,7 +29,7 @@ func IssueCode(u iusecases.IssueCode) echo.HandlerFunc {
 		}
 		err := input.Validate()
 		if err != nil {
-			return c.String(http.StatusBadRequest, "Invalid input")
+			return c.String(http.StatusInternalServerError, err.Error())
 		}
 
 		output, err := u(input, c.Request().Context())

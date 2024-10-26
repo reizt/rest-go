@@ -28,7 +28,13 @@ func VerifyCode(u iusecases.VerifyCode) echo.HandlerFunc {
 
 		output, err := u(input, c.Request().Context())
 		if err != nil {
-			return c.String(http.StatusInternalServerError, err.Error())
+			switch err {
+			case iusecases.ErrInvalidToken:
+			case iusecases.ErrInvalidCode:
+				return c.String(http.StatusUnauthorized, err.Error())
+			default:
+				return c.String(http.StatusInternalServerError, err.Error())
+			}
 		}
 
 		cookie := http.Cookie{

@@ -29,7 +29,7 @@ func UpdateUser(s *iservices.All) i.UpdateUser {
 		user, err := s.Database.User.GetById(loginTokenPayload.UserId, ctx)
 		if err != nil {
 			fmt.Println(err)
-			return nil, i.ErrUserNotFound
+			return nil, i.ErrInvalidToken
 		}
 
 		// Update user

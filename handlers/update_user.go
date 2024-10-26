@@ -31,7 +31,12 @@ func UpdateUser(u iusecases.UpdateUser) echo.HandlerFunc {
 		}
 		err := input.Validate()
 		if err != nil {
-			return c.String(http.StatusBadRequest, "Invalid input")
+			switch err {
+			case iusecases.ErrInvalidToken:
+				return c.String(http.StatusUnauthorized, err.Error())
+			default:
+				return c.String(http.StatusBadRequest, err.Error())
+			}
 		}
 
 		if _, err := u(input, c.Request().Context()); err != nil {

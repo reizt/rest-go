@@ -19,7 +19,6 @@ func getClient() (*ent.Client, error) {
 		os.Getenv("POSTGRES_PASSWORD"),
 		os.Getenv("POSTGRES_DB"),
 	)
-	fmt.Println(addr)
 	client, err := ent.Open("postgres", addr)
 	if err != nil {
 		return nil, err
