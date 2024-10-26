@@ -1,11 +1,10 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/joho/godotenv"
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+	"github.com/reizt/rest-go/router"
+	"github.com/reizt/rest-go/services"
+	"github.com/reizt/rest-go/usecases"
 )
 
 func main() {
@@ -14,16 +13,8 @@ func main() {
 		panic(err)
 	}
 
-	e := echo.New()
-
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-
-	e.GET("/", hello)
-
+	s := services.New()
+	u := usecases.New(s)
+	e := router.New(u)
 	e.Logger.Fatal(e.Start(":1323"))
-}
-
-func hello(c echo.Context) error {
-	return c.String(http.StatusOK, "Hello, World!")
 }
