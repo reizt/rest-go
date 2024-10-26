@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -12,9 +13,9 @@ import (
 )
 
 func VerifyCode(s *iservices.All) i.VerifyCode {
-	return func(input i.VerifyCodeInput) (*i.VerifyCodeOutput, error) {
+	return func(input i.VerifyCodeInput, ctx context.Context) (*i.VerifyCodeOutput, error) {
 		// Get code from database
-		code, err := s.Database.Code.GetById(input.CodeId)
+		code, err := s.Database.Code.GetById(input.CodeId, ctx)
 		if err != nil {
 			fmt.Println(err)
 			return nil, fmt.Errorf("not found")

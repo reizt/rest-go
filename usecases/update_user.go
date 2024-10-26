@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 
@@ -11,7 +12,7 @@ import (
 )
 
 func UpdateUser(s *iservices.All) i.UpdateUser {
-	return func(input i.UpdateUserInput) (*i.UpdateUserOutput, error) {
+	return func(input i.UpdateUserInput, ctx context.Context) (*i.UpdateUserOutput, error) {
 		// Verify token
 		payload, err := s.Signer.Verify(input.LoginToken)
 		if err != nil {
@@ -25,7 +26,7 @@ func UpdateUser(s *iservices.All) i.UpdateUser {
 		}
 
 		// Get user
-		user, err := s.Database.User.GetById(loginTokenPayload.UserId)
+		user, err := s.Database.User.GetById(loginTokenPayload.UserId, ctx)
 		if err != nil {
 			fmt.Println(err)
 			return nil, fmt.Errorf("user not found")
@@ -38,7 +39,7 @@ func UpdateUser(s *iservices.All) i.UpdateUser {
 			Name:         input.Data.Name,
 			PasswordHash: user.PasswordHash,
 		}
-		if err := s.Database.User.Update(newUser); err != nil {
+		if err := s.Database.User.Update(newUser, ctx); err != nil {
 			fmt.Println(err)
 			return nil, fmt.Errorf("failed to update user")
 		}

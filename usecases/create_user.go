@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -13,7 +14,7 @@ import (
 )
 
 func CreateUser(s *iservices.All) i.CreateUser {
-	return func(input i.CreateUserInput) (*i.CreateUserOutput, error) {
+	return func(input i.CreateUserInput, ctx context.Context) (*i.CreateUserOutput, error) {
 		// Verify token
 		payload, err := s.Signer.Verify(input.OTPToken)
 		if err != nil {
@@ -39,7 +40,7 @@ func CreateUser(s *iservices.All) i.CreateUser {
 			Name:         input.Name,
 			PasswordHash: passwordHash,
 		}
-		if err := s.Database.User.Create(user); err != nil {
+		if err := s.Database.User.Create(user, ctx); err != nil {
 			fmt.Println(err)
 			return nil, fmt.Errorf("failed to create user")
 		}

@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -12,7 +13,7 @@ import (
 )
 
 func IssueCode(s *iservices.All) i.IssueCode {
-	return func(input i.IssueCodeInput) (*i.IssueCodeOutput, error) {
+	return func(input i.IssueCodeInput, ctx context.Context) (*i.IssueCodeOutput, error) {
 		// Generate code hash
 		codeValue := id.GenerateCode()
 		codeValueHash, err := s.Hasher.Hash(codeValue)
@@ -32,7 +33,7 @@ func IssueCode(s *iservices.All) i.IssueCode {
 			ExpiresAt: expiresAt,
 			CreatedAt: now,
 		}
-		if err := s.Database.Code.Create(code); err != nil {
+		if err := s.Database.Code.Create(code, ctx); err != nil {
 			fmt.Println(err)
 			return nil, fmt.Errorf("failed to create code")
 		}

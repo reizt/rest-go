@@ -1,6 +1,8 @@
 package iusecases
 
 import (
+	"context"
+
 	v "github.com/go-ozzo/ozzo-validation/v4"
 )
 
@@ -18,4 +20,4 @@ type SayHelloOutput struct {
 	Message string
 }
 
-type SayHello func(SayHelloInput) (*SayHelloOutput, error)
+type SayHello func(SayHelloInput, context.Context) (*SayHelloOutput, error)

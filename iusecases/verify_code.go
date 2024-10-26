@@ -1,6 +1,8 @@
 package iusecases
 
 import (
+	"context"
+
 	v "github.com/go-ozzo/ozzo-validation/v4"
 )
 
@@ -20,4 +22,4 @@ type VerifyCodeOutput struct {
 	Token string
 }
 
-type VerifyCode func(VerifyCodeInput) (*VerifyCodeOutput, error)
+type VerifyCode func(VerifyCodeInput, context.Context) (*VerifyCodeOutput, error)

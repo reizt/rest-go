@@ -1,6 +1,8 @@
 package iusecases
 
 import (
+	"context"
+
 	v "github.com/go-ozzo/ozzo-validation/v4"
 )
 
@@ -22,4 +24,4 @@ type CreateUserOutput struct {
 	LoginToken string
 }
 
-type CreateUser func(CreateUserInput) (*CreateUserOutput, error)
+type CreateUser func(CreateUserInput, context.Context) (*CreateUserOutput, error)

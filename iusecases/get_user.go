@@ -1,6 +1,8 @@
 package iusecases
 
 import (
+	"context"
+
 	v "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/reizt/rest-go/entities"
 )
@@ -19,4 +21,4 @@ type GetUserOutput struct {
 	User entities.User
 }
 
-type GetUser func(GetUserInput) (*GetUserOutput, error)
+type GetUser func(GetUserInput, context.Context) (*GetUserOutput, error)

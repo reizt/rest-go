@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 
@@ -10,7 +11,7 @@ import (
 )
 
 func GetUser(s *iservices.All) i.GetUser {
-	return func(input i.GetUserInput) (*i.GetUserOutput, error) {
+	return func(input i.GetUserInput, ctx context.Context) (*i.GetUserOutput, error) {
 		// Verify token
 		payload, err := s.Signer.Verify(input.LoginToken)
 		if err != nil {
@@ -24,7 +25,7 @@ func GetUser(s *iservices.All) i.GetUser {
 		}
 
 		// Get user
-		user, err := s.Database.User.GetById(loginTokenPayload.UserId)
+		user, err := s.Database.User.GetById(loginTokenPayload.UserId, ctx)
 		if err != nil {
 			fmt.Println(err)
 			return nil, fmt.Errorf("user not found")

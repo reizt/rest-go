@@ -19,7 +19,7 @@ func SayHello(u iusecases.SayHello) echo.HandlerFunc {
 			return c.String(http.StatusBadRequest, "Invalid input")
 		}
 
-		output, err := u(input)
+		output, err := u(input, c.Request().Context())
 		if err != nil {
 			return c.String(http.StatusInternalServerError, err.Error())
 		}

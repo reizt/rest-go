@@ -1,6 +1,8 @@
 package iusecases
 
 import (
+	"context"
+
 	v "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/go-ozzo/ozzo-validation/v4/is"
 )
@@ -21,4 +23,4 @@ type IssueCodeOutput struct {
 	CodeId string
 }
 
-type IssueCode func(IssueCodeInput) (*IssueCodeOutput, error)
+type IssueCode func(IssueCodeInput, context.Context) (*IssueCodeOutput, error)

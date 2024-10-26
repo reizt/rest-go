@@ -32,7 +32,7 @@ func UpdateUser(u iusecases.UpdateUser) echo.HandlerFunc {
 			return c.String(http.StatusBadRequest, "Invalid input")
 		}
 
-		if _, err := u(input); err != nil {
+		if _, err := u(input, c.Request().Context()); err != nil {
 			return c.String(http.StatusInternalServerError, err.Error())
 		}
 

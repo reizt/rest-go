@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/reizt/rest-go/iservices"
@@ -8,7 +9,7 @@ import (
 )
 
 func SayHello(s *iservices.All) i.SayHello {
-	return func(input i.SayHelloInput) (*i.SayHelloOutput, error) {
+	return func(input i.SayHelloInput, ctx context.Context) (*i.SayHelloOutput, error) {
 		output := i.SayHelloOutput{
 			Message: fmt.Sprintf("Hello, %s!", input.Name),
 		}

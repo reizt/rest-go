@@ -1,6 +1,10 @@
 package idatabase
 
-import "github.com/reizt/rest-go/entities"
+import (
+	"context"
+
+	"github.com/reizt/rest-go/entities"
+)
 
 type User struct {
 	Id           string
@@ -24,9 +28,9 @@ type UserUpdate struct {
 }
 
 type UserRepo interface {
-	GetById(id string) (User, error)
-	GetByEmail(email string) (User, error)
-	Create(data User) error
-	Update(data User) error
-	Delete(id string) error
+	GetById(id string, ctx context.Context) (*User, error)
+	GetByEmail(email string, ctx context.Context) (*User, error)
+	Create(data User, ctx context.Context) error
+	Update(data User, ctx context.Context) error
+	Delete(id string, ctx context.Context) error
 }

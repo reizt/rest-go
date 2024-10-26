@@ -1,6 +1,8 @@
 package iusecases
 
 import (
+	"context"
+
 	v "github.com/go-ozzo/ozzo-validation/v4"
 )
 
@@ -24,4 +26,4 @@ func (i UpdateUserInput) Validate() error {
 type UpdateUserOutput struct {
 }
 
-type UpdateUser func(UpdateUserInput) (*UpdateUserOutput, error)
+type UpdateUser func(UpdateUserInput, context.Context) (*UpdateUserOutput, error)
