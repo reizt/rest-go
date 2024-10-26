@@ -6,8 +6,8 @@ import (
 )
 
 type IssueCodeInput struct {
-	Email  string `json:"email"`
-	Action string `json:"action"`
+	Email  string
+	Action string
 }
 
 func (i IssueCodeInput) Validate() error {
@@ -18,7 +18,7 @@ func (i IssueCodeInput) Validate() error {
 }
 
 type IssueCodeOutput struct {
-	CodeId string `json:"codeId"`
+	CodeId string
 }
 
 type IssueCode func(IssueCodeInput) (*IssueCodeOutput, error)

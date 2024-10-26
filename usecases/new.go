@@ -7,7 +7,8 @@ import (
 
 func New(s *iservices.All) *iusecases.All {
 	return &iusecases.All{
-		SayHello:  SayHello(s),
-		IssueCode: IssueCode(s),
+		SayHello:   SayHello(s),
+		IssueCode:  IssueCode(s),
+		VerifyCode: VerifyCode(s),
 	}
 }

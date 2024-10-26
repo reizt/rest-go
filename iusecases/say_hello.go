@@ -5,7 +5,7 @@ import (
 )
 
 type SayHelloInput struct {
-	Name string `json:"name"`
+	Name string
 }
 
 func (i SayHelloInput) Validate() error {
@@ -15,7 +15,7 @@ func (i SayHelloInput) Validate() error {
 }
 
 type SayHelloOutput struct {
-	Message string `json:"message"`
+	Message string
 }
 
 type SayHello func(SayHelloInput) (*SayHelloOutput, error)

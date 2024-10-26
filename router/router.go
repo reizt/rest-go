@@ -11,6 +11,7 @@ func New(u *iusecases.All) *echo.Echo {
 
 	e.GET("/hello", handlers.SayHello(u.SayHello))
 	e.POST("/code/issue", handlers.IssueCode(u.IssueCode))
+	e.POST("/code/verify", handlers.VerifyCode(u.VerifyCode))
 
 	return e
 }
