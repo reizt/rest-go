@@ -31,7 +31,7 @@ func (r UserRepo) Create(data idatabase.User) error {
 	return nil
 }
 
-func (r UserRepo) Update(id string, data idatabase.UserUpdate) error {
+func (r UserRepo) Update(data idatabase.User) error {
 	return nil
 }
 

@@ -14,6 +14,7 @@ func New(u *iusecases.All) *echo.Echo {
 	e.POST("/auth/code/verify", handlers.VerifyCode(u.VerifyCode))
 	e.POST("/auth/create-user", handlers.CreateUser(u.CreateUser))
 	e.GET("/user", handlers.GetUser(u.GetUser))
+	e.PATCH("/user", handlers.UpdateUser(u.UpdateUser))
 
 	return e
 }

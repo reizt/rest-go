@@ -6,4 +6,5 @@ type All struct {
 	VerifyCode
 	CreateUser
 	GetUser
+	UpdateUser
 }

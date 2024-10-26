@@ -10,5 +10,8 @@ func New(s *iservices.All) *iusecases.All {
 		SayHello:   SayHello(s),
 		IssueCode:  IssueCode(s),
 		VerifyCode: VerifyCode(s),
+		CreateUser: CreateUser(s),
+		GetUser:    GetUser(s),
+		UpdateUser: UpdateUser(s),
 	}
 }

@@ -27,6 +27,6 @@ type UserRepo interface {
 	GetById(id string) (User, error)
 	GetByEmail(email string) (User, error)
 	Create(data User) error
-	Update(id string, data UserUpdate) error
+	Update(data User) error
 	Delete(id string) error
 }
