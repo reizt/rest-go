@@ -12,6 +12,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/sendgrid/sendgrid-go v3.16.0+incompatible
 	github.com/stretchr/testify v1.8.4
+	golang.org/x/crypto v0.22.0
 )
 
 require (
@@ -32,7 +33,6 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	github.com/zclconf/go-cty v1.8.0 // indirect
-	golang.org/x/crypto v0.22.0 // indirect
 	golang.org/x/mod v0.20.0 // indirect
 	golang.org/x/net v0.24.0 // indirect
 	golang.org/x/sys v0.23.0 // indirect

@@ -5,21 +5,22 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/reizt/rest-go/iservices/isigner"
 )
 
-type Service struct {
+type service struct {
 	privateKey []byte
 	publicKey  []byte
 }
 
-func New(privateKey, publicKey string) *Service {
-	return &Service{
+func New(privateKey, publicKey string) isigner.Service {
+	return &service{
 		privateKey: []byte(privateKey),
 		publicKey:  []byte(publicKey),
 	}
 }
 
-func (s *Service) Sign(json string, expiresIn time.Duration) (string, error) {
+func (s *service) Sign(json string, expiresIn time.Duration) (string, error) {
 	// Construct claims
 	claims := jwt.MapClaims{
 		"exp":  time.Now().Add(expiresIn).Unix(),
@@ -36,7 +37,7 @@ func (s *Service) Sign(json string, expiresIn time.Duration) (string, error) {
 	return tokenString, nil
 }
 
-func (s *Service) Verify(tokenString string) (string, error) {
+func (s *service) Verify(tokenString string) (string, error) {
 	// Verify token
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

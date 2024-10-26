@@ -6,12 +6,12 @@ import (
 	"github.com/reizt/rest-go/iservices/igreeter"
 )
 
+type service struct{}
+
 func New() igreeter.Service {
-	return Service{}
+	return service{}
 }
 
-type Service struct{}
-
-func (g Service) Greet(name string) (string, error) {
+func (g service) Greet(name string) (string, error) {
 	return fmt.Sprintf("Hello, %s!", name), nil
 }

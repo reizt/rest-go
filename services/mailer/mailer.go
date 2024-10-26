@@ -9,19 +9,19 @@ import (
 	"github.com/reizt/rest-go/iservices/imailer"
 )
 
-type Service struct {
+type service struct {
 	apiKey string
 	from   string
 }
 
-func New(apiKey string, from string) *Service {
-	return &Service{
+func New(apiKey string, from string) imailer.Service {
+	return &service{
 		apiKey: apiKey,
 		from:   from,
 	}
 }
 
-func (s *Service) Send(input imailer.SendInput) error {
+func (s *service) Send(input imailer.SendInput) error {
 	from := mail.NewEmail("REST Go", s.from)
 	to := mail.NewEmail(input.To, input.To)
 	message := mail.NewSingleEmail(from, input.Subject, to, input.Text, input.Html)
