@@ -1,4 +1,4 @@
-package mock
+package mservices
 
 import "github.com/reizt/rest-go/iservices/imailer"
 

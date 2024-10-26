@@ -11,7 +11,7 @@ import (
 	"github.com/reizt/rest-go/iservices/idatabase"
 	"github.com/reizt/rest-go/iservices/imailer"
 	i "github.com/reizt/rest-go/iusecases"
-	"github.com/reizt/rest-go/mock"
+	"github.com/reizt/rest-go/mservices"
 	"github.com/reizt/rest-go/usecases/token"
 	"github.com/stretchr/testify/assert"
 )
@@ -132,18 +132,18 @@ func TestCreateUser(t *testing.T) {
 			// Arrange
 			s := iservices.All{
 				Database: idatabase.Service{
-					User: mock.UserRepo{
+					User: mservices.UserRepo{
 						Create_: tc.sDatabaseUserCreate,
 					},
-					Code: mock.CodeRepo{},
+					Code: mservices.CodeRepo{},
 				},
-				Hasher: mock.Hasher{
+				Hasher: mservices.Hasher{
 					Hash_: tc.sHasherHash,
 				},
-				Mailer: mock.Mailer{
+				Mailer: mservices.Mailer{
 					Code_: tc.sMailerCode,
 				},
-				Signer: mock.Signer{
+				Signer: mservices.Signer{
 					Sign_:   tc.sSignerSign,
 					Verify_: tc.sSignerVerify,
 				},

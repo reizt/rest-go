@@ -1,4 +1,4 @@
-package mock
+package mservices
 
 type Hasher struct {
 	Hash_     func(value string) (string, error)
