@@ -19,12 +19,12 @@ func CreateUser(s *iservices.All) i.CreateUser {
 		payload, err := s.Signer.Verify(input.OTPToken)
 		if err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("invalid token")
+			return nil, i.ErrInvalidToken
 		}
 		var otpPayload token.OTPTokenPayload
 		if err := json.Unmarshal([]byte(payload), &otpPayload); err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("invalid token")
+			return nil, i.ErrInvalidToken
 		}
 
 		// Create user
@@ -32,7 +32,7 @@ func CreateUser(s *iservices.All) i.CreateUser {
 		passwordHash, err := s.Hasher.Hash(input.Password)
 		if err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("failed to create user")
+			return nil, i.ErrUnexpected
 		}
 		user := idatabase.User{
 			Id:           userId,
@@ -42,7 +42,7 @@ func CreateUser(s *iservices.All) i.CreateUser {
 		}
 		if err := s.Database.User.Create(user, ctx); err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("failed to create user")
+			return nil, i.ErrUnexpected
 		}
 
 		// Issue login token
@@ -52,12 +52,12 @@ func CreateUser(s *iservices.All) i.CreateUser {
 		loginTokenPayloadJson, err := json.Marshal(loginTokenPayload)
 		if err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("failed to create user")
+			return nil, i.ErrUnexpected
 		}
 		loginToken, err := s.Signer.Sign(string(loginTokenPayloadJson), time.Hour*24*7)
 		if err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("failed to create user")
+			return nil, i.ErrUnexpected
 		}
 
 		// Return

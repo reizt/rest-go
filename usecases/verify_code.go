@@ -17,17 +17,17 @@ func VerifyCode(s *iservices.All) i.VerifyCode {
 		code, err := s.Database.Code.GetById(input.CodeId, ctx)
 		if err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("not found")
+			return nil, i.ErrCodeNotFound
 		}
 
 		// Check if code is expired
 		if code.ExpiresAt < time.Now().Unix() {
-			return nil, fmt.Errorf("expired")
+			return nil, i.ErrCodeExpired
 		}
 
 		// Check if code is valid
 		if err := s.Hasher.Validate(input.Code, code.ValueHash); err != nil {
-			return nil, fmt.Errorf("invalid code")
+			return nil, i.ErrInvalidCode
 		}
 
 		// Issue token
@@ -37,12 +37,12 @@ func VerifyCode(s *iservices.All) i.VerifyCode {
 		tokenPayloadJson, err := json.Marshal(tokenPayload)
 		if err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("failed to issue token")
+			return nil, i.ErrUnexpected
 		}
 		token, err := s.Signer.Sign(string(tokenPayloadJson), time.Hour)
 		if err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("failed to issue token")
+			return nil, i.ErrUnexpected
 		}
 
 		// Return

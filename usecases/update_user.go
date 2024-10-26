@@ -17,19 +17,19 @@ func UpdateUser(s *iservices.All) i.UpdateUser {
 		payload, err := s.Signer.Verify(input.LoginToken)
 		if err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("invalid token")
+			return nil, i.ErrInvalidToken
 		}
 		var loginTokenPayload token.LoginTokenPayload
 		if err := json.Unmarshal([]byte(payload), &loginTokenPayload); err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("invalid token")
+			return nil, i.ErrInvalidToken
 		}
 
 		// Get user
 		user, err := s.Database.User.GetById(loginTokenPayload.UserId, ctx)
 		if err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("user not found")
+			return nil, i.ErrUserNotFound
 		}
 
 		// Update user
@@ -41,7 +41,7 @@ func UpdateUser(s *iservices.All) i.UpdateUser {
 		}
 		if err := s.Database.User.Update(newUser, ctx); err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("failed to update user")
+			return nil, i.ErrUnexpected
 		}
 
 		// Return

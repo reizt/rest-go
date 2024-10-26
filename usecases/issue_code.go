@@ -18,12 +18,12 @@ func IssueCode(s *iservices.All) i.IssueCode {
 		codeValue, err := id.GenerateCode()
 		if err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("failed to create code")
+			return nil, i.ErrUnexpected
 		}
 		codeValueHash, err := s.Hasher.Hash(codeValue)
 		if err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("failed to create code")
+			return nil, i.ErrUnexpected
 		}
 
 		// Save code to database
@@ -39,7 +39,7 @@ func IssueCode(s *iservices.All) i.IssueCode {
 		}
 		if err := s.Database.Code.Create(code, ctx); err != nil {
 			fmt.Println(err)
-			return nil, fmt.Errorf("failed to create code")
+			return nil, i.ErrUnexpected
 		}
 
 		// Send email
@@ -49,7 +49,10 @@ func IssueCode(s *iservices.All) i.IssueCode {
 			Text:    codeValue,
 			Html:    fmt.Sprintf("Your code is <code>%s</code>", codeValue),
 		}
-		s.Mailer.Send(mailerSendInput)
+		if err := s.Mailer.Send(mailerSendInput); err != nil {
+			fmt.Println(err)
+			return nil, i.ErrUnexpected
+		}
 
 		// Return
 		output := i.IssueCodeOutput{
