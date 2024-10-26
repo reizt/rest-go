@@ -15,7 +15,7 @@ type service struct {
 	from   string
 }
 
-func New() (imailer.Service, error) {
+func New() (*service, error) {
 	apiKey := os.Getenv("SENDGRID_API_KEY")
 	from := os.Getenv("MAILER_FROM")
 	if apiKey == "" || from == "" {
@@ -28,7 +28,14 @@ func New() (imailer.Service, error) {
 	}, nil
 }
 
-func (s *service) Send(input imailer.SendInput) error {
+type sendInput struct {
+	To      string
+	Subject string
+	Text    string
+	Html    string
+}
+
+func (s *service) send(input sendInput) error {
 	from := mail.NewEmail("REST Go", s.from)
 	to := mail.NewEmail(input.To, input.To)
 	message := mail.NewSingleEmail(from, input.Subject, to, input.Text, input.Html)
@@ -40,4 +47,14 @@ func (s *service) Send(input imailer.SendInput) error {
 	}
 	fmt.Println("SendGrid status:", response.StatusCode)
 	return nil
+}
+
+func (s *service) Code(input imailer.CodeInput) error {
+	sendInput := sendInput{
+		To:      input.To,
+		Subject: "Your code",
+		Text:    input.Code,
+		Html:    fmt.Sprintf("Your code is <code>%s</code>", input.Code),
+	}
+	return s.send(sendInput)
 }

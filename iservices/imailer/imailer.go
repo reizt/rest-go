@@ -1,12 +1,12 @@
 package imailer
 
 type Service interface {
-	Send(input SendInput) error
+	Code(input CodeInput) error
 }
 
-type SendInput struct {
+type CodeInput struct {
 	To      string
-	Subject string
-	Text    string
-	Html    string
+	CodeId  string
+	Code    string
+	Expires int64
 }

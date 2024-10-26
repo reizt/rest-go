@@ -43,13 +43,13 @@ func IssueCode(s *iservices.All) i.IssueCode {
 		}
 
 		// Send email
-		mailerSendInput := imailer.SendInput{
+		mailerInput := imailer.CodeInput{
 			To:      input.Email,
-			Subject: "Your code",
-			Text:    codeValue,
-			Html:    fmt.Sprintf("Your code is <code>%s</code>", codeValue),
+			CodeId:  code.Id,
+			Code:    codeValue,
+			Expires: int64(code.ExpiresAt),
 		}
-		if err := s.Mailer.Send(mailerSendInput); err != nil {
+		if err := s.Mailer.Code(mailerInput); err != nil {
 			fmt.Println(err)
 			return nil, i.ErrUnexpected
 		}

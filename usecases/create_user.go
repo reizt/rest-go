@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
 
 	"github.com/reizt/rest-go/iservices"
 	"github.com/reizt/rest-go/iservices/idatabase"
@@ -54,7 +53,7 @@ func CreateUser(s *iservices.All) i.CreateUser {
 			fmt.Println(err)
 			return nil, i.ErrUnexpected
 		}
-		loginToken, err := s.Signer.Sign(string(loginTokenPayloadJson), time.Hour*24*7)
+		loginToken, err := s.Signer.Sign(string(loginTokenPayloadJson), LoginTokenExpiration)
 		if err != nil {
 			fmt.Println(err)
 			return nil, i.ErrUnexpected

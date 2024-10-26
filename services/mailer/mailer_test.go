@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/joho/godotenv"
-	"github.com/reizt/rest-go/iservices/imailer"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -25,7 +24,7 @@ func TestSend(t *testing.T) {
 	assert.NoError(t, err)
 
 	// Arrange
-	input := imailer.SendInput{
+	input := sendInput{
 		To:      "reizt.dev@gmail.com",
 		Subject: "Hello",
 		Text:    "Hello, world!",
@@ -33,7 +32,7 @@ func TestSend(t *testing.T) {
 	}
 
 	// Act
-	err = s.Send(input)
+	err = s.send(input)
 
 	// Assert
 	assert.NoError(t, err)
