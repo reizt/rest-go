@@ -13,7 +13,10 @@ func main() {
 		panic(err)
 	}
 
-	s := services.New()
+	s, err := services.New()
+	if err != nil {
+		panic(err)
+	}
 	u := usecases.New(s)
 	e := router.New(u)
 	e.Logger.Fatal(e.Start(":1323"))
