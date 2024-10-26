@@ -1,0 +1,4 @@
+[build]
+watch_dir = "./"
+bin = ".air/main"
+cmd = "go build -o ./.air/main ."
