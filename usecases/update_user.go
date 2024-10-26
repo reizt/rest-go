@@ -2,34 +2,19 @@ package usecases
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	"github.com/reizt/rest-go/iservices"
 	"github.com/reizt/rest-go/iservices/idatabase"
 	i "github.com/reizt/rest-go/iusecases"
-	"github.com/reizt/rest-go/usecases/token"
 )
 
 func UpdateUser(s *iservices.All) i.UpdateUser {
+	auth := authenticator(s)
 	return func(input i.UpdateUserInput, ctx context.Context) (*i.UpdateUserOutput, error) {
-		// Verify token
-		payload, err := s.Signer.Verify(input.LoginToken)
+		user, err := auth(input.LoginToken, ctx)
 		if err != nil {
-			fmt.Println(err)
-			return nil, i.ErrInvalidToken
-		}
-		var loginTokenPayload token.LoginTokenPayload
-		if err := json.Unmarshal([]byte(payload), &loginTokenPayload); err != nil {
-			fmt.Println(err)
-			return nil, i.ErrInvalidToken
-		}
-
-		// Get user
-		user, err := s.Database.User.GetById(loginTokenPayload.UserId, ctx)
-		if err != nil {
-			fmt.Println(err)
-			return nil, i.ErrInvalidToken
+			return nil, err
 		}
 
 		// Update user
