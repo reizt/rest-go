@@ -1,7 +1,7 @@
 package hasher
 
 import (
-	"crypto/rand"
+	"fmt"
 
 	"github.com/reizt/rest-go/iservices/ihasher"
 	"golang.org/x/crypto/bcrypt"
@@ -13,24 +13,25 @@ func New() ihasher.Service {
 	return &service{}
 }
 
-func (s *service) Hash(password string) (string, error) {
-	salt := make([]byte, bcrypt.MinCost)
-	if _, err := rand.Read(salt); err != nil {
-		return "", err
+// Hash は文字列をbcryptでハッシュ化します
+func (s *service) Hash(value string) (string, error) {
+	if value == "" {
+		return "", fmt.Errorf("value cannot be empty")
 	}
 
-	hash, err := bcrypt.GenerateFromPassword(append([]byte(password), salt...), bcrypt.DefaultCost)
+	bytes, err := bcrypt.GenerateFromPassword([]byte(value), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err
 	}
 
-	return string(append(hash, salt...)), nil
+	return string(bytes), nil
 }
 
-func (s *service) Validate(password, hash string) error {
-	hashBytes := []byte(hash)
-	salt := hashBytes[bcrypt.MinCost:]
-	hashBytes = hashBytes[:bcrypt.MinCost]
+// Validate はハッシュ値と平文を比較検証します
+func (s *service) Validate(value, hash string) error {
+	if value == "" || hash == "" {
+		return fmt.Errorf("value and hash cannot be empty")
+	}
 
-	return bcrypt.CompareHashAndPassword(hashBytes, append([]byte(password), salt...))
+	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(value))
 }
