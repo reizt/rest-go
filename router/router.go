@@ -10,6 +10,7 @@ func New(u *iusecases.All) *echo.Echo {
 	e := echo.New()
 
 	e.GET("/hello", handlers.SayHello(u.SayHello))
+	e.POST("/code/issue", handlers.IssueCode(u.IssueCode))
 
 	return e
 }

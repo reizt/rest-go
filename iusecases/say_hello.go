@@ -18,4 +18,4 @@ type SayHelloOutput struct {
 	Message string `json:"message"`
 }
 
-type SayHello func(SayHelloInput) (SayHelloOutput, error)
+type SayHello func(SayHelloInput) (*SayHelloOutput, error)

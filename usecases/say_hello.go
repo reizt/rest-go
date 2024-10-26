@@ -4,14 +4,14 @@ import (
 	"fmt"
 
 	"github.com/reizt/rest-go/iservices"
-	"github.com/reizt/rest-go/iusecases"
+	i "github.com/reizt/rest-go/iusecases"
 )
 
-func SayHello(s *iservices.All) iusecases.SayHello {
-	return func(input iusecases.SayHelloInput) (iusecases.SayHelloOutput, error) {
-		output := iusecases.SayHelloOutput{
+func SayHello(s *iservices.All) i.SayHello {
+	return func(input i.SayHelloInput) (*i.SayHelloOutput, error) {
+		output := i.SayHelloOutput{
 			Message: fmt.Sprintf("Hello, %s!", input.Name),
 		}
-		return output, nil
+		return &output, nil
 	}
 }
