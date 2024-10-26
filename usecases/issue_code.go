@@ -15,7 +15,11 @@ import (
 func IssueCode(s *iservices.All) i.IssueCode {
 	return func(input i.IssueCodeInput, ctx context.Context) (*i.IssueCodeOutput, error) {
 		// Generate code hash
-		codeValue := id.GenerateCode()
+		codeValue, err := id.GenerateCode()
+		if err != nil {
+			fmt.Println(err)
+			return nil, fmt.Errorf("failed to create code")
+		}
 		codeValueHash, err := s.Hasher.Hash(codeValue)
 		if err != nil {
 			fmt.Println(err)

@@ -39,6 +39,7 @@ func (r UserRepo) GetByEmail(email string, ctx context.Context) (*idatabase.User
 
 func (r UserRepo) Create(data idatabase.User, ctx context.Context) error {
 	_, err := r.client.User.Create().
+		SetID(data.Id).
 		SetName(data.Name).
 		SetEmail(data.Email).
 		SetPasswordHash(data.PasswordHash).

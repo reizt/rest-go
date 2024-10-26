@@ -41,6 +41,7 @@ func (r CodeRepo) GetByEmail(email string, ctx context.Context) (*idatabase.Code
 
 func (r CodeRepo) Create(data idatabase.Code, ctx context.Context) error {
 	_, err := r.client.Code.Create().
+		SetID(data.Id).
 		SetEmail(data.Email).
 		SetAction(data.Action).
 		SetValueHash(data.ValueHash).

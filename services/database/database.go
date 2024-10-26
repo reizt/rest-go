@@ -31,6 +31,6 @@ func New() idatabase.Service {
 	}
 	return idatabase.Service{
 		User: UserRepo{client},
-		Code: CodeRepo{},
+		Code: CodeRepo{client},
 	}
 }

@@ -1,6 +1,6 @@
 package ihasher
 
 type Service interface {
-	Hash(password string) (string, error)
-	Validate(password, hash string) error
+	Hash(value string) (string, error)
+	Validate(value, hash string) error
 }

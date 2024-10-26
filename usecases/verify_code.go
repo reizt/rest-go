@@ -8,7 +8,6 @@ import (
 
 	"github.com/reizt/rest-go/iservices"
 	i "github.com/reizt/rest-go/iusecases"
-	"github.com/reizt/rest-go/usecases/id"
 	"github.com/reizt/rest-go/usecases/token"
 )
 
@@ -27,7 +26,7 @@ func VerifyCode(s *iservices.All) i.VerifyCode {
 		}
 
 		// Check if code is valid
-		if code.ValueHash != id.GenerateCode() {
+		if err := s.Hasher.Validate(input.Code, code.ValueHash); err != nil {
 			return nil, fmt.Errorf("invalid code")
 		}
 

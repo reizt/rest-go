@@ -2,14 +2,18 @@ package id
 
 import (
 	"crypto/rand"
-	"encoding/base64"
 )
 
-func GenerateCode() string {
-	b := make([]byte, 16)
-	_, err := rand.Read(b)
-	if err != nil {
-		panic(err)
+const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+const length = 6
+
+func GenerateCode() (string, error) {
+	b := make([]byte, length)
+	if _, err := rand.Read(b); err != nil {
+		return "", err
 	}
-	return base64.URLEncoding.EncodeToString(b)
+	for i := range b {
+		b[i] = charset[int(b[i])%len(charset)]
+	}
+	return string(b), nil
 }

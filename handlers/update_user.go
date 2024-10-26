@@ -7,11 +7,13 @@ import (
 	"github.com/reizt/rest-go/iusecases"
 )
 
+type UpdateUserReqBodyData struct {
+	Name string `json:"name"`
+}
+
 type UpdateUserReqBody struct {
-	Token string `json:"token"`
-	Data  struct {
-		Name string `json:"name"`
-	} `json:"data"`
+	Token string                `json:"token"`
+	Data  UpdateUserReqBodyData `json:"data"`
 }
 
 func UpdateUser(u iusecases.UpdateUser) echo.HandlerFunc {
