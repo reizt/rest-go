@@ -11,7 +11,9 @@ import (
 	"github.com/reizt/rest-go/usecases/token"
 )
 
-func authenticator(s *iservices.All) func(tk string, ctx context.Context) (*idatabase.User, error) {
+type authenticator func(tk string, ctx context.Context) (*idatabase.User, error)
+
+func createAuthenticator(s *iservices.All) authenticator {
 	return func(tk string, ctx context.Context) (*idatabase.User, error) {
 		// Verify token
 		payload, err := s.Signer.Verify(tk)

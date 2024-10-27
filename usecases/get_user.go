@@ -7,15 +7,13 @@ import (
 	i "github.com/reizt/rest-go/iusecases"
 )
 
-func GetUser(s *iservices.All) i.GetUser {
-	auth := authenticator(s)
+func GetUser(s *iservices.All, auth authenticator) i.GetUser {
 	return func(input i.GetUserInput, ctx context.Context) (*i.GetUserOutput, error) {
 		user, err := auth(input.LoginToken, ctx)
 		if err != nil {
 			return nil, err
 		}
 
-		// Return
 		output := i.GetUserOutput{
 			User: user.ToEntity(),
 		}

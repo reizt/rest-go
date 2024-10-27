@@ -9,8 +9,7 @@ import (
 	i "github.com/reizt/rest-go/iusecases"
 )
 
-func UpdateUser(s *iservices.All) i.UpdateUser {
-	auth := authenticator(s)
+func UpdateUser(s *iservices.All, auth authenticator) i.UpdateUser {
 	return func(input i.UpdateUserInput, ctx context.Context) (*i.UpdateUserOutput, error) {
 		user, err := auth(input.LoginToken, ctx)
 		if err != nil {
@@ -29,7 +28,6 @@ func UpdateUser(s *iservices.All) i.UpdateUser {
 			return nil, i.ErrUnexpected
 		}
 
-		// Return
 		output := i.UpdateUserOutput{}
 		return &output, nil
 	}

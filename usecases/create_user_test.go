@@ -21,7 +21,7 @@ import (
 func TestCreateUser(t *testing.T) {
 	t.Parallel()
 
-	type TestCase struct {
+	type testCase struct {
 		Skip                bool
 		Name                string
 		sSignerSign         func(json string, expiresIn time.Duration) (string, error)
@@ -98,7 +98,7 @@ func TestCreateUser(t *testing.T) {
 		return "", errors.New("hash failed")
 	}
 
-	testCases := []TestCase{
+	testCases := []testCase{
 		{
 			Name:          "👎 invalid token",
 			sSignerVerify: sSignerVerifyNG,
