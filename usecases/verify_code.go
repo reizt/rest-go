@@ -32,7 +32,8 @@ func VerifyCode(s *iservices.All) i.VerifyCode {
 
 		// Issue token
 		tokenPayload := token.OTPTokenPayload{
-			Email: code.Email,
+			Email:  code.Email,
+			Action: code.Action,
 		}
 		tokenPayloadJson, err := json.Marshal(tokenPayload)
 		if err != nil {

@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/reizt/rest-go/entities"
 	"github.com/reizt/rest-go/iservices/idatabase"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -14,7 +15,7 @@ var (
 	sampleCode = idatabase.Code{
 		Id:        "xxx",
 		Email:     "john@example.com",
-		Action:    "create-user",
+		Action:    entities.CodeActionCreateUser,
 		ValueHash: "fdsa",
 		ExpiresAt: 0,
 		CreatedAt: 0,

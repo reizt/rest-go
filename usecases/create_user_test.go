@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/reizt/rest-go/entities"
 	"github.com/reizt/rest-go/iservices"
 	"github.com/reizt/rest-go/iservices/idatabase"
 	"github.com/reizt/rest-go/iservices/imailer"
@@ -69,7 +70,19 @@ func TestCreateUser(t *testing.T) {
 	}
 	sSignerVerifyOK := func(tk string) (string, error) {
 		assert.Equal(t, tk, input.OTPToken)
-		payload := token.OTPTokenPayload{Email: sample.Email}
+		payload := token.OTPTokenPayload{
+			Email:  sample.Email,
+			Action: entities.CodeActionCreateUser,
+		}
+		payloadJson, _ := json.Marshal(payload)
+		return string(payloadJson), nil
+	}
+	sSignerVerifyDifferentAction := func(tk string) (string, error) {
+		assert.Equal(t, tk, input.OTPToken)
+		payload := token.OTPTokenPayload{
+			Email:  sample.Email,
+			Action: entities.CodeActionResetPassword,
+		}
 		payloadJson, _ := json.Marshal(payload)
 		return string(payloadJson), nil
 	}
@@ -89,6 +102,11 @@ func TestCreateUser(t *testing.T) {
 		{
 			Name:          "👎 invalid token",
 			sSignerVerify: sSignerVerifyNG,
+			expectedErr:   i.ErrInvalidToken,
+		},
+		{
+			Name:          "👎 invalid action of token",
+			sSignerVerify: sSignerVerifyDifferentAction,
 			expectedErr:   i.ErrInvalidToken,
 		},
 		{

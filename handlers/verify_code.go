@@ -37,6 +37,8 @@ func VerifyCode(u iusecases.VerifyCode) echo.HandlerFunc {
 			case iusecases.ErrInvalidToken:
 			case iusecases.ErrInvalidCode:
 				return c.String(http.StatusUnauthorized, err.Error())
+			case iusecases.ErrCodeNotFound:
+				return c.String(http.StatusNotFound, err.Error())
 			default:
 				return c.String(http.StatusInternalServerError, err.Error())
 			}

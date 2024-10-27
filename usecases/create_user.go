@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/reizt/rest-go/entities"
 	"github.com/reizt/rest-go/iservices"
 	"github.com/reizt/rest-go/iservices/idatabase"
 	i "github.com/reizt/rest-go/iusecases"
@@ -23,6 +24,9 @@ func CreateUser(s *iservices.All) i.CreateUser {
 		var otpPayload token.OTPTokenPayload
 		if err := json.Unmarshal([]byte(payload), &otpPayload); err != nil {
 			fmt.Println(err)
+			return nil, i.ErrInvalidToken
+		}
+		if otpPayload.Action != entities.CodeActionCreateUser {
 			return nil, i.ErrInvalidToken
 		}
 

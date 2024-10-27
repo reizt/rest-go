@@ -8,6 +8,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/reizt/rest-go/e2e/fetcher"
+	"github.com/reizt/rest-go/entities"
 	"github.com/reizt/rest-go/handlers"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -41,7 +42,7 @@ func testIssueCode(t *testing.T, f *fetcher.Fetcher) string {
 		Path:   "/auth/code/issue",
 		Body: handlers.IssueCodeReqBody{
 			Email:  userEmail,
-			Action: "create-user",
+			Action: entities.CodeActionCreateUser,
 		},
 		Headers: map[string]string{},
 	}

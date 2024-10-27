@@ -1,5 +1,6 @@
 volumes:
   psql:
+  go:
 services:
   db:
     container_name: rest-go-db
@@ -20,6 +21,7 @@ services:
     command: air -c .air.toml
     volumes:
       - .:/app
+      - go:/go
     depends_on:
       - db
     environment:
