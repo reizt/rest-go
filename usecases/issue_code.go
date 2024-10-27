@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/reizt/rest-go/entities"
 	"github.com/reizt/rest-go/iservices"
 	"github.com/reizt/rest-go/iservices/idatabase"
 	"github.com/reizt/rest-go/iservices/imailer"
@@ -14,6 +15,13 @@ import (
 
 func IssueCode(s *iservices.All) i.IssueCode {
 	return func(input i.IssueCodeInput, ctx context.Context) (*i.IssueCodeOutput, error) {
+		if input.Action == entities.CodeActionCreateUser {
+			user, _ := s.Database.User.GetByEmail(input.Email, ctx)
+			if user != nil {
+				return nil, i.ErrUserAlreadyExists
+			}
+		}
+
 		// Generate code hash
 		codeValue, err := id.GenerateCode()
 		if err != nil {
