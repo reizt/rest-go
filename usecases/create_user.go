@@ -13,7 +13,7 @@ import (
 	"reij.uno/usecases/token"
 )
 
-func CreateUser(s *iservices.All) i.CreateUser {
+func createUser(s *iservices.All) i.CreateUser {
 	return func(input i.CreateUserInput, ctx context.Context) (*i.CreateUserOutput, error) {
 		// Verify token
 		payload, err := s.Signer.Verify(input.OTPToken)

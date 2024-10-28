@@ -13,7 +13,7 @@ import (
 	"reij.uno/usecases/id"
 )
 
-func IssueCode(s *iservices.All) i.IssueCode {
+func issueCode(s *iservices.All) i.IssueCode {
 	return func(input i.IssueCodeInput, ctx context.Context) (*i.IssueCodeOutput, error) {
 		if input.Action == entities.CodeActionCreateUser {
 			user, _ := s.Database.User.GetByEmail(input.Email, ctx)

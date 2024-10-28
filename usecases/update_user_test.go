@@ -90,7 +90,7 @@ func TestUpdateUser(t *testing.T) {
 					},
 				},
 			}
-			u := UpdateUser(&s, auth)
+			u := updateUser(&s, auth)
 
 			// Act
 			ctx := context.Background()

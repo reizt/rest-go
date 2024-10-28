@@ -44,7 +44,7 @@ func TestGetUser(t *testing.T) {
 
 	s := iservices.All{}
 
-	u := GetUser(&s, auth)
+	u := getUser(&s, auth)
 	output, err := u(input, context.Background())
 	require.NoError(t, err)
 	assert.Equal(t, user.Id, output.User.Id)

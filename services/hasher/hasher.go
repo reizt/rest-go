@@ -14,7 +14,7 @@ func New() ihasher.Service {
 }
 
 // Hash は文字列をbcryptでハッシュ化します
-func (s service) Hash(value string) (string, error) {
+func (service) Hash(value string) (string, error) {
 	if value == "" {
 		return "", fmt.Errorf("value cannot be empty")
 	}
@@ -28,7 +28,7 @@ func (s service) Hash(value string) (string, error) {
 }
 
 // Validate はハッシュ値と平文を比較検証します
-func (s service) Validate(value, hash string) error {
+func (service) Validate(value, hash string) error {
 	if value == "" || hash == "" {
 		return fmt.Errorf("value and hash cannot be empty")
 	}

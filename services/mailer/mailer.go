@@ -11,8 +11,8 @@ import (
 )
 
 type service struct {
-	apiKey string
 	from   string
+	client *sendgrid.Client
 }
 
 func New() (*service, error) {
@@ -23,8 +23,8 @@ func New() (*service, error) {
 	}
 
 	return &service{
-		apiKey: apiKey,
 		from:   from,
+		client: sendgrid.NewSendClient(apiKey),
 	}, nil
 }
 
@@ -39,8 +39,7 @@ func (s service) send(input sendInput) error {
 	from := mail.NewEmail("REST Go", s.from)
 	to := mail.NewEmail(input.To, input.To)
 	message := mail.NewSingleEmail(from, input.Subject, to, input.Text, input.Html)
-	client := sendgrid.NewSendClient(s.apiKey)
-	response, err := client.Send(message)
+	response, err := s.client.Send(message)
 	if err != nil {
 		fmt.Println(err)
 		return err

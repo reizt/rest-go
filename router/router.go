@@ -34,7 +34,7 @@ func New(u *iusecases.All) *echo.Echo {
 
 	development := os.Getenv("TEST_CLEAR_DATABASE")
 	if development == "on" {
-		e.POST("/dev/clear-database", ClearDatabase)
+		e.POST("/dev/clear-database", clearDatabase)
 	}
 
 	return e

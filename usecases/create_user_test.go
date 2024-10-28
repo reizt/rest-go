@@ -167,7 +167,7 @@ func TestCreateUser(t *testing.T) {
 					Verify_: tc.sSignerVerify,
 				},
 			}
-			u := CreateUser(&s)
+			u := createUser(&s)
 
 			// Act
 			ctx := context.Background()

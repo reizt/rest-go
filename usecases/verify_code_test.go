@@ -148,7 +148,7 @@ func TestVerifyCode(t *testing.T) {
 					Sign_: tc.sSignerSign,
 				},
 			}
-			u := VerifyCode(&s)
+			u := verifyCode(&s)
 
 			// Act
 			ctx := context.Background()

@@ -9,7 +9,7 @@ import (
 	i "reij.uno/iusecases"
 )
 
-func UpdateUser(s *iservices.All, auth authenticator) i.UpdateUser {
+func updateUser(s *iservices.All, auth authenticator) i.UpdateUser {
 	return func(input i.UpdateUserInput, ctx context.Context) (*i.UpdateUserOutput, error) {
 		user, err := auth(input.LoginToken, ctx)
 		if err != nil {

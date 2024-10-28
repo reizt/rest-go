@@ -5,7 +5,7 @@ import (
 	"reij.uno/services/database"
 )
 
-func ClearDatabase(c echo.Context) error {
+func clearDatabase(c echo.Context) error {
 	database.Clean()
 	return c.NoContent(204)
 }

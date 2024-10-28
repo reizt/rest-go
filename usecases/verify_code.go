@@ -11,7 +11,7 @@ import (
 	"reij.uno/usecases/token"
 )
 
-func VerifyCode(s *iservices.All) i.VerifyCode {
+func verifyCode(s *iservices.All) i.VerifyCode {
 	return func(input i.VerifyCodeInput, ctx context.Context) (*i.VerifyCodeOutput, error) {
 		// Get code from database
 		code, err := s.Database.Code.GetById(input.CodeId, ctx)

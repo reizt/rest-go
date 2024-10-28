@@ -7,7 +7,7 @@ import (
 	i "reij.uno/iusecases"
 )
 
-func GetUser(s *iservices.All, auth authenticator) i.GetUser {
+func getUser(_ *iservices.All, auth authenticator) i.GetUser {
 	return func(input i.GetUserInput, ctx context.Context) (*i.GetUserOutput, error) {
 		user, err := auth(input.LoginToken, ctx)
 		if err != nil {

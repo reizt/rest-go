@@ -170,7 +170,7 @@ func TestIssueCode(t *testing.T) {
 					Code_: tc.sMailerCode,
 				},
 			}
-			u := IssueCode(&s)
+			u := issueCode(&s)
 
 			// Act
 			ctx := context.Background()
