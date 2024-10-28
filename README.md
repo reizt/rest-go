@@ -51,7 +51,3 @@ Run tests
 ```sh
 go test -v ./...
 ```
-
-## TODO
-
-- Complete usecase tests
