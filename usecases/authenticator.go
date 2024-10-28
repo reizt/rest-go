@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/reizt/rest-go/iservices"
-	"github.com/reizt/rest-go/iservices/idatabase"
-	i "github.com/reizt/rest-go/iusecases"
-	"github.com/reizt/rest-go/usecases/token"
+	"reij.uno/iservices"
+	"reij.uno/iservices/idatabase"
+	i "reij.uno/iusecases"
+	"reij.uno/usecases/token"
 )
 
 type authenticator func(tk string, ctx context.Context) (*idatabase.User, error)

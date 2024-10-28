@@ -3,12 +3,12 @@ package services
 import (
 	"fmt"
 
-	"github.com/reizt/rest-go/iservices"
-	"github.com/reizt/rest-go/services/database"
-	"github.com/reizt/rest-go/services/greeter"
-	"github.com/reizt/rest-go/services/hasher"
-	"github.com/reizt/rest-go/services/mailer"
-	"github.com/reizt/rest-go/services/signer"
+	"reij.uno/iservices"
+	"reij.uno/services/database"
+	"reij.uno/services/greeter"
+	"reij.uno/services/hasher"
+	"reij.uno/services/mailer"
+	"reij.uno/services/signer"
 )
 
 func New() (*iservices.All, error) {

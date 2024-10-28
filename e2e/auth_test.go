@@ -7,11 +7,11 @@ import (
 	"testing"
 
 	"github.com/joho/godotenv"
-	"github.com/reizt/rest-go/e2e/fetcher"
-	"github.com/reizt/rest-go/entities"
-	"github.com/reizt/rest-go/handlers"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"reij.uno/e2e/fetcher"
+	"reij.uno/entities"
+	"reij.uno/handlers"
 )
 
 const (

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/reizt/rest-go/iservices"
-	i "github.com/reizt/rest-go/iusecases"
+	"reij.uno/iservices"
+	i "reij.uno/iusecases"
 )
 
 func SayHello(s *iservices.All) i.SayHello {

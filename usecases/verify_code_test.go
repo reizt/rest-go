@@ -7,13 +7,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/reizt/rest-go/entities"
-	"github.com/reizt/rest-go/iservices"
-	"github.com/reizt/rest-go/iservices/idatabase"
-	i "github.com/reizt/rest-go/iusecases"
-	"github.com/reizt/rest-go/mservices"
-	"github.com/reizt/rest-go/usecases/token"
 	"github.com/stretchr/testify/assert"
+	"reij.uno/entities"
+	"reij.uno/iservices"
+	"reij.uno/iservices/idatabase"
+	i "reij.uno/iusecases"
+	"reij.uno/mservices"
+	"reij.uno/usecases/token"
 )
 
 func TestVerifyCode(t *testing.T) {

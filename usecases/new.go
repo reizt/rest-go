@@ -1,8 +1,8 @@
 package usecases
 
 import (
-	"github.com/reizt/rest-go/iservices"
-	"github.com/reizt/rest-go/iusecases"
+	"reij.uno/iservices"
+	"reij.uno/iusecases"
 )
 
 func New(s *iservices.All) *iusecases.All {

@@ -6,8 +6,8 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	h "github.com/reizt/rest-go/handlers"
-	"github.com/reizt/rest-go/iusecases"
+	h "reij.uno/handlers"
+	"reij.uno/iusecases"
 )
 
 func New(u *iusecases.All) *echo.Echo {

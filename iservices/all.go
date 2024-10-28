@@ -1,11 +1,11 @@
 package iservices
 
 import (
-	"github.com/reizt/rest-go/iservices/idatabase"
-	"github.com/reizt/rest-go/iservices/igreeter"
-	"github.com/reizt/rest-go/iservices/ihasher"
-	"github.com/reizt/rest-go/iservices/imailer"
-	"github.com/reizt/rest-go/iservices/isigner"
+	"reij.uno/iservices/idatabase"
+	"reij.uno/iservices/igreeter"
+	"reij.uno/iservices/ihasher"
+	"reij.uno/iservices/imailer"
+	"reij.uno/iservices/isigner"
 )
 
 type All struct {

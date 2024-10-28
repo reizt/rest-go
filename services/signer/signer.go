@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/reizt/rest-go/iservices/isigner"
+	"reij.uno/iservices/isigner"
 )
 
 type service struct {

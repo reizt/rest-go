@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/reizt/rest-go/entities"
-	"github.com/reizt/rest-go/iservices"
-	"github.com/reizt/rest-go/iservices/idatabase"
-	"github.com/reizt/rest-go/iservices/imailer"
-	i "github.com/reizt/rest-go/iusecases"
-	"github.com/reizt/rest-go/usecases/id"
+	"reij.uno/entities"
+	"reij.uno/iservices"
+	"reij.uno/iservices/idatabase"
+	"reij.uno/iservices/imailer"
+	i "reij.uno/iusecases"
+	"reij.uno/usecases/id"
 )
 
 func IssueCode(s *iservices.All) i.IssueCode {

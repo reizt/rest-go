@@ -1,6 +1,6 @@
 package mservices
 
-import "github.com/reizt/rest-go/iservices/imailer"
+import "reij.uno/iservices/imailer"
 
 type Mailer struct {
 	Code_ func(input imailer.CodeInput) error

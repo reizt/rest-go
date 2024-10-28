@@ -3,7 +3,7 @@ package mservices
 import (
 	"context"
 
-	"github.com/reizt/rest-go/iservices/idatabase"
+	"reij.uno/iservices/idatabase"
 )
 
 type UserRepo struct {

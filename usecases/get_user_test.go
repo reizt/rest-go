@@ -4,11 +4,11 @@ import (
 	"context"
 	"testing"
 
-	"github.com/reizt/rest-go/iservices"
-	"github.com/reizt/rest-go/iservices/idatabase"
-	i "github.com/reizt/rest-go/iusecases"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"reij.uno/iservices"
+	"reij.uno/iservices/idatabase"
+	i "reij.uno/iusecases"
 )
 
 func TestGetUser(t *testing.T) {

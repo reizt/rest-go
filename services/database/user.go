@@ -3,9 +3,9 @@ package database
 import (
 	"context"
 
-	"github.com/reizt/rest-go/ent"
-	"github.com/reizt/rest-go/ent/user"
-	"github.com/reizt/rest-go/iservices/idatabase"
+	"reij.uno/ent"
+	"reij.uno/ent/user"
+	"reij.uno/iservices/idatabase"
 )
 
 type UserRepo struct {

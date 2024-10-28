@@ -5,12 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/reizt/rest-go/entities"
-	"github.com/reizt/rest-go/iservices"
-	"github.com/reizt/rest-go/iservices/idatabase"
-	i "github.com/reizt/rest-go/iusecases"
-	"github.com/reizt/rest-go/usecases/id"
-	"github.com/reizt/rest-go/usecases/token"
+	"reij.uno/entities"
+	"reij.uno/iservices"
+	"reij.uno/iservices/idatabase"
+	i "reij.uno/iusecases"
+	"reij.uno/usecases/id"
+	"reij.uno/usecases/token"
 )
 
 func CreateUser(s *iservices.All) i.CreateUser {

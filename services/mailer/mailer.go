@@ -7,7 +7,7 @@ import (
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 
-	"github.com/reizt/rest-go/iservices/imailer"
+	"reij.uno/iservices/imailer"
 )
 
 type service struct {

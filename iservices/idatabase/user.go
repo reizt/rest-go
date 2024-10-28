@@ -3,7 +3,7 @@ package idatabase
 import (
 	"context"
 
-	"github.com/reizt/rest-go/entities"
+	"reij.uno/entities"
 )
 
 type User struct {

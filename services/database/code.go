@@ -3,9 +3,9 @@ package database
 import (
 	"context"
 
-	"github.com/reizt/rest-go/ent"
-	"github.com/reizt/rest-go/ent/code"
-	"github.com/reizt/rest-go/iservices/idatabase"
+	"reij.uno/ent"
+	"reij.uno/ent/code"
+	"reij.uno/iservices/idatabase"
 )
 
 type CodeRepo struct {

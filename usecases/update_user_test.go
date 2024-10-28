@@ -5,11 +5,11 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/reizt/rest-go/iservices"
-	"github.com/reizt/rest-go/iservices/idatabase"
-	i "github.com/reizt/rest-go/iusecases"
-	"github.com/reizt/rest-go/mservices"
 	"github.com/stretchr/testify/assert"
+	"reij.uno/iservices"
+	"reij.uno/iservices/idatabase"
+	i "reij.uno/iusecases"
+	"reij.uno/mservices"
 )
 
 func TestUpdateUser(t *testing.T) {

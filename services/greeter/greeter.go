@@ -3,7 +3,7 @@ package greeter
 import (
 	"fmt"
 
-	"github.com/reizt/rest-go/iservices/igreeter"
+	"reij.uno/iservices/igreeter"
 )
 
 type service struct{}

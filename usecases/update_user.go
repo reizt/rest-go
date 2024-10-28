@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/reizt/rest-go/iservices"
-	"github.com/reizt/rest-go/iservices/idatabase"
-	i "github.com/reizt/rest-go/iusecases"
+	"reij.uno/iservices"
+	"reij.uno/iservices/idatabase"
+	i "reij.uno/iusecases"
 )
 
 func UpdateUser(s *iservices.All, auth authenticator) i.UpdateUser {

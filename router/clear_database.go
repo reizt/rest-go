@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/reizt/rest-go/services/database"
+	"reij.uno/services/database"
 )
 
 func ClearDatabase(c echo.Context) error {

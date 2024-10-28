@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/reizt/rest-go/entities"
-	"github.com/reizt/rest-go/iusecases"
+	"reij.uno/entities"
+	"reij.uno/iusecases"
 )
 
 type GetUserResBody struct {

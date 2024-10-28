@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/joho/godotenv"
-	"github.com/reizt/rest-go/router"
-	"github.com/reizt/rest-go/services"
-	"github.com/reizt/rest-go/usecases"
+	"reij.uno/router"
+	"reij.uno/services"
+	"reij.uno/usecases"
 )
 
 func main() {

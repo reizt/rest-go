@@ -3,8 +3,8 @@ package hasher
 import (
 	"fmt"
 
-	"github.com/reizt/rest-go/iservices/ihasher"
 	"golang.org/x/crypto/bcrypt"
+	"reij.uno/iservices/ihasher"
 )
 
 type service struct{}

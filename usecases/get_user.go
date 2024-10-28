@@ -3,8 +3,8 @@ package usecases
 import (
 	"context"
 
-	"github.com/reizt/rest-go/iservices"
-	i "github.com/reizt/rest-go/iusecases"
+	"reij.uno/iservices"
+	i "reij.uno/iusecases"
 )
 
 func GetUser(s *iservices.All, auth authenticator) i.GetUser {

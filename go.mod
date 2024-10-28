@@ -1,4 +1,4 @@
-module github.com/reizt/rest-go
+module reij.uno
 
 go 1.23.2
 

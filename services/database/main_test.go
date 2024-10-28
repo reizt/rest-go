@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/joho/godotenv"
-	"github.com/reizt/rest-go/ent"
+	"reij.uno/ent"
 )
 
 var (

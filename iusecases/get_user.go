@@ -4,7 +4,7 @@ import (
 	"context"
 
 	v "github.com/go-ozzo/ozzo-validation/v4"
-	"github.com/reizt/rest-go/entities"
+	"reij.uno/entities"
 )
 
 type GetUserInput struct {

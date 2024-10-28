@@ -7,15 +7,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/reizt/rest-go/entities"
-	"github.com/reizt/rest-go/iservices"
-	"github.com/reizt/rest-go/iservices/idatabase"
-	"github.com/reizt/rest-go/iservices/imailer"
-	i "github.com/reizt/rest-go/iusecases"
-	"github.com/reizt/rest-go/mservices"
-	"github.com/reizt/rest-go/usecases/token"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"reij.uno/entities"
+	"reij.uno/iservices"
+	"reij.uno/iservices/idatabase"
+	"reij.uno/iservices/imailer"
+	i "reij.uno/iusecases"
+	"reij.uno/mservices"
+	"reij.uno/usecases/token"
 )
 
 func TestCreateUser(t *testing.T) {

@@ -5,9 +5,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/reizt/rest-go/iservices/idatabase"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"reij.uno/iservices/idatabase"
 )
 
 var (

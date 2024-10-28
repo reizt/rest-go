@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/reizt/rest-go/iusecases"
+	"reij.uno/iusecases"
 )
 
 type CreateUserReqBody struct {

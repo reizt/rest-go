@@ -7,8 +7,8 @@ import (
 	"time"
 
 	_ "github.com/lib/pq"
-	"github.com/reizt/rest-go/ent"
-	"github.com/reizt/rest-go/iservices/idatabase"
+	"reij.uno/ent"
+	"reij.uno/iservices/idatabase"
 )
 
 func getClient() (*ent.Client, error) {

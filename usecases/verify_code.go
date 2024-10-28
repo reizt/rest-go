@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/reizt/rest-go/iservices"
-	i "github.com/reizt/rest-go/iusecases"
-	"github.com/reizt/rest-go/usecases/token"
+	"reij.uno/iservices"
+	i "reij.uno/iusecases"
+	"reij.uno/usecases/token"
 )
 
 func VerifyCode(s *iservices.All) i.VerifyCode {
