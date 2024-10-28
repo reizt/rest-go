@@ -7,4 +7,5 @@ type All struct {
 	CreateUser
 	GetUser
 	UpdateUser
+	UpdatePassword
 }

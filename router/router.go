@@ -31,6 +31,7 @@ func New(u *iusecases.All) *echo.Echo {
 	e.POST("/auth/create-user", h.CreateUser(u.CreateUser))
 	e.GET("/user", h.GetUser(u.GetUser))
 	e.PATCH("/user", h.UpdateUser(u.UpdateUser))
+	e.PATCH("/user/password", h.UpdatePassword(u.UpdatePassword))
 
 	development := os.Getenv("TEST_CLEAR_DATABASE")
 	if development == "on" {
