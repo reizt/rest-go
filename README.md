@@ -42,6 +42,11 @@ TEST_CLEAR_DATABASE=on
 TEST_GENERATE_CODE_FIXED_VALUE=123456
 ```
 
+Generate ent code
+```sh
+go generate ./ent
+```
+
 Launch database & API server
 ```sh
 docker compose up
