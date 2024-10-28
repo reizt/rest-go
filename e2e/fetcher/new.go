@@ -50,7 +50,7 @@ func (Fetcher) parseCookies(cookies []*http.Cookie) map[string]string {
 	return cookieMap
 }
 
-func (f *Fetcher) Fetch(req Request) (*Response, error) {
+func (f Fetcher) Fetch(req Request) (*Response, error) {
 	var bodyJson string
 	if req.Body != nil {
 		jsonData, err := json.Marshal(req.Body)

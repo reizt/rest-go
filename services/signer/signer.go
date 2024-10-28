@@ -43,7 +43,7 @@ func New() (isigner.Service, error) {
 	}, nil
 }
 
-func (s *service) Sign(json string, expiresIn time.Duration) (string, error) {
+func (s service) Sign(json string, expiresIn time.Duration) (string, error) {
 	// Construct claims
 	claims := jwt.MapClaims{
 		"exp":  time.Now().Add(expiresIn).Unix(),
@@ -60,7 +60,7 @@ func (s *service) Sign(json string, expiresIn time.Duration) (string, error) {
 	return tokenString, nil
 }
 
-func (s *service) Verify(tokenString string) (string, error) {
+func (s service) Verify(tokenString string) (string, error) {
 	// Verify token
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodECDSA); !ok {

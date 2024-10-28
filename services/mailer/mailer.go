@@ -35,7 +35,7 @@ type sendInput struct {
 	Html    string
 }
 
-func (s *service) send(input sendInput) error {
+func (s service) send(input sendInput) error {
 	from := mail.NewEmail("REST Go", s.from)
 	to := mail.NewEmail(input.To, input.To)
 	message := mail.NewSingleEmail(from, input.Subject, to, input.Text, input.Html)
@@ -49,7 +49,7 @@ func (s *service) send(input sendInput) error {
 	return nil
 }
 
-func (s *service) Code(input imailer.CodeInput) error {
+func (s service) Code(input imailer.CodeInput) error {
 	sendInput := sendInput{
 		To:      input.To,
 		Subject: "Your code",
